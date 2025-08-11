@@ -5,7 +5,7 @@
 
 PhoneBook phoneBook;
 
-void	action(std::string user_input)
+void	action(my_string user_input)
 {
 	if (user_input == "EXIT")
 	{
@@ -32,7 +32,7 @@ int main ()
 	IOHelper::printWelcomeMessage();
 	while (true)
 	{
-		std::string user_input = IOHelper::getUserInput("");
+		my_string user_input = IOHelper::getUserInput("");
 		action(user_input);
 		IOHelper::printListOfCommands();
 	}

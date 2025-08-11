@@ -1,9 +1,10 @@
 #ifndef PHONEBOOK_HPP
-#define PHONEBOOK_HPP
+# define PHONEBOOK_HPP
 
-#include "Contact.hpp"
+# include "Contact.hpp"
+# include "alias.hpp"
 
-#define MAX_CONTACT_AMOUNT 8
+# define MAX_CONTACT_AMOUNT 8
 
 class PhoneBook {
 

@@ -6,7 +6,7 @@
 PhoneBook::PhoneBook( void )
 {
 	#ifdef DEBUG
-	std::cout << "PhoneBook constructor" << std::endl;
+		my_cout << "PhoneBook constructor" << my_endl;
 	#endif
 	this->_contactsAmount = 0;
 }
@@ -14,7 +14,7 @@ PhoneBook::PhoneBook( void )
 PhoneBook::~PhoneBook( void )
 {
 	#ifdef DEBUG
-	std::cout << "PhoneBook destructor" << std::endl;
+		my_cout << "PhoneBook destructor" << my_endl;
 	#endif
 }
 
@@ -32,8 +32,8 @@ void PhoneBook::add()
 	Contact newContact;
 	for (size_t i = 0; i < NUM_FIELDS; i++)
 	{
-		std::string prompt = "Please enter " + newContact.getField(i)[KEY] + ": ";
-		std::string user_input = IOHelper::getUserInput(prompt);
+		my_string prompt = "Please enter " + newContact.getField(i)[KEY] + ": ";
+		my_string user_input = IOHelper::getUserInput(prompt);
 		newContact.setField(i, user_input);
 	}
 	this->_contacts[this->_contactsAmount % MAX_CONTACT_AMOUNT] = newContact;
@@ -47,8 +47,8 @@ void PhoneBook::search()
 	try
 	{
 		int index;
-		std::string prompt = "PLease enter index of element you want to search: ";
-		std::string user_input = IOHelper::getUserInput(prompt);
+		my_string prompt = "PLease enter index of element you want to search: ";
+		my_string user_input = IOHelper::getUserInput(prompt);
 		index = std::stoi(user_input);
 		if (index < 0 || index > MAX_CONTACT_AMOUNT)
 		{
@@ -64,7 +64,7 @@ void PhoneBook::search()
 	catch(const std::exception& e)
 	{
 		#ifdef DEBUG
-			std::cerr << e.what() << my_endl;
+			my_cerr << e.what() << my_endl;
 		#endif
 		my_cerr << "Sorry, cannot find record with this index." << my_endl;
 	}

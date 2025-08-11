@@ -1,11 +1,9 @@
 #ifndef CONTACT_HPP
-#define CONTACT_HPP
+# define CONTACT_HPP
 
 # include <string>
 # include <iostream>
-
-# define my_cout std::cout
-# define my_endl std::endl
+# include "alias.hpp"
 
 # define KEY 0
 # define VALUE 1
@@ -15,14 +13,14 @@
 class Contact {
 
 	private:
-		std::string _field[NUM_FIELDS][2];
+		my_string _field[NUM_FIELDS][2];
 
 	public:
 		Contact( void );
 		~Contact( void );
 		void printContactDetails();
-		std::string *getField(int index);
-		void setField(int index, std::string);
+		my_string *getField(int index);
+		void setField(int index, my_string);
 };
 
 

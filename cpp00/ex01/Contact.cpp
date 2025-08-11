@@ -4,7 +4,7 @@
 Contact::Contact( void )
 {
 	#ifdef DEBUG
-		std::cout << "Contact constructor" << std::endl;
+		my_cout << "Contact constructor" << my_endl;
 	#endif
 	for (size_t i = 0; i < 5; i++)
 	{
@@ -35,7 +35,7 @@ Contact::Contact( void )
 Contact::~Contact( void )
 {
 	#ifdef DEBUG
-		std::cout << "Contact destructor" << std::endl;
+		my_cout << "Contact destructor" << my_endl;
 	#endif
 }
 
@@ -47,12 +47,12 @@ void Contact::printContactDetails( void )
 	}
 }
 
-std::string *Contact::getField(int index)
+my_string *Contact::getField(int index)
 {
 	return (this->_field[index]);
 }
 
-void Contact::setField(int index, std::string new_value)
+void Contact::setField(int index, my_string new_value)
 {
 	this->_field[index][VALUE] = new_value;
 }

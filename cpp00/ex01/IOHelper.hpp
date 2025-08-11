@@ -1,16 +1,11 @@
 #ifndef IOHelper_HPP
-#define IOHelper_HPP
+# define IOHelper_HPP
 
 # include <string>
 # include <iostream>
 # include <iomanip>
 # include "Contact.hpp"
-
-# define my_string std::string
-# define my_cout std::cout
-# define my_cerr std::cerr
-# define my_cin std::cin
-# define my_endl std::endl
+# include "alias.hpp"
 
 # define WIDE_SIZE 10
 

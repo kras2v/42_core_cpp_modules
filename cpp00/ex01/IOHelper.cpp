@@ -3,14 +3,14 @@
 IOHelper::IOHelper()
 {
 	#ifdef DEBUG
-		std::cout << "IOHelper constructor" << std::endl;
+		my_cout << "IOHelper constructor" << my_endl;
 	#endif
 }
 
 IOHelper::~IOHelper()
 {
 	#ifdef DEBUG
-		std::cout << "IOHelper constructor" << std::endl;
+		my_cout << "IOHelper constructor" << my_endl;
 	#endif
 }
 
@@ -84,7 +84,7 @@ my_string IOHelper::getUserInput(my_string prompt)
 	my_cout << prompt;
 	while (true)
 	{
-		if (!getline(std::cin, input_string))
+		if (!getline(my_cin, input_string))
 		{
 			my_cin.clear();
 			clearerr(stdin);
