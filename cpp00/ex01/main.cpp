@@ -1,5 +1,7 @@
 #include "PhoneBook.hpp"
+#include "IOHelper.hpp"
 #include <iostream>
+#include <iomanip>
 
 PhoneBook phoneBook;
 
@@ -7,25 +9,32 @@ void	action(std::string user_input)
 {
 	if (user_input == "EXIT")
 	{
+		my_cout << "Bye-bye :D" << my_endl;
 		exit(0);
 	}
-	if (user_input == "ADD")
+	else if (user_input == "ADD")
 	{
-		phoneBook.Add();
+		phoneBook.add();
 	}
-	if (user_input == "SEARCH")
+	else if (user_input == "SEARCH")
 	{
-		phoneBook.Search();
+		phoneBook.search();
+	}
+	else
+	{
+		my_cout << "I don't know what is \"" << user_input
+		<< "\" Please enter valid command (ADD, SEARCH, EXIT)" << my_endl;
 	}
 }
 
 int main ()
 {
-	std::string user_input;
+	IOHelper::printWelcomeMessage();
 	while (true)
 	{
-		std::cin >> user_input;
+		std::string user_input = IOHelper::getUserInput("");
 		action(user_input);
+		IOHelper::printListOfCommands();
 	}
 	return (0);
 }

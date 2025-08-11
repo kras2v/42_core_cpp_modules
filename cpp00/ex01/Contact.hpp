@@ -15,14 +15,16 @@
 class Contact {
 
 	private:
-		std::string field[NUM_FIELDS][2];
+		std::string _field[NUM_FIELDS][2];
 
 	public:
 		Contact( void );
 		~Contact( void );
-		void PrintContactDetails();
-		std::string *GetField(int index);
-		void SetField(int index, std::string);
+		void printContactDetails();
+		std::string *getField(int index);
+		void setField(int index, std::string);
+		void formatOutput(std::string);
+		void formatOutput(int number);
 };
 
 

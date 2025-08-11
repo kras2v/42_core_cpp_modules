@@ -8,18 +8,17 @@
 class PhoneBook {
 
 	private:
-		Contact		_contacts[MAX_CONTACT_AMOUNT];
-		static int	_contactsAmount;
+		Contact	_contacts[MAX_CONTACT_AMOUNT];
+		int		_contactsAmount;
 
 	public:
 
-		int myvar;
-
 		PhoneBook( void );
 		~PhoneBook( void );
-		void Add();
-		void Search();
-		void ShowList();
+		void add();
+		void search();
+		void showList();
+		Contact *getContact(int index);
 };
 
 

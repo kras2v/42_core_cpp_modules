@@ -1,4 +1,7 @@
 #include "Contact.hpp"
+#include <iomanip>
+
+#define WIDE_SIZE 10
 
 Contact::Contact( void )
 {
@@ -10,24 +13,24 @@ Contact::Contact( void )
 		switch (i)
 		{
 			case 0:
-				this->field[i][KEY] = "first name";
+				this->_field[i][KEY] = "first name";
 				break;
 			case 1:
-				this->field[i][KEY] = "last name";
+				this->_field[i][KEY] = "last name";
 				break;
 			case 2:
-				this->field[i][KEY] = "nickname";
+				this->_field[i][KEY] = "nickname";
 				break;
 			case 3:
-				this->field[i][KEY] = "phone number";
+				this->_field[i][KEY] = "phone number";
 				break;
 			case 4:
-				this->field[i][KEY] = "darkest secret";
+				this->_field[i][KEY] = "darkest secret";
 				break;
 			default:
 				break;
 		}
-		this->field[i][1] = "";
+		this->_field[i][1] = "";
 	}
 }
 
@@ -38,20 +41,46 @@ Contact::~Contact( void )
 	#endif
 }
 
-void Contact::PrintContactDetails( void )
+void Contact::formatOutput(std::string string)
 {
-	for (size_t i = 0; i < 5; i++)
+	std::string buffer;
+	buffer = string.substr(0, 9);
+	int size = string.size();
+	if (size > 9)
 	{
-		my_cout << this->field[i][KEY] << "\t" << this->field[i][VALUE] << my_endl;
+		my_cout << std::setw(WIDE_SIZE - 1);
+		my_cout << buffer << '.';
+	}
+	else
+	{
+		my_cout << std::setw(WIDE_SIZE);
+		my_cout << buffer;
+	}
+	my_cout << '|';
+}
+
+void Contact::formatOutput(int number)
+{
+	std::string buffer;
+	my_cout << std::setw(WIDE_SIZE);
+	my_cout << number;
+	my_cout << '|';
+}
+
+void Contact::printContactDetails( void )
+{
+	for (size_t i = 0; i < NUM_FIELDS; i++)
+	{
+		my_cout << this->_field[i][KEY] << ": " << this->_field[i][VALUE] << my_endl;
 	}
 }
 
-std::string *Contact::GetField(int index)
+std::string *Contact::getField(int index)
 {
-	return (this->field[index]);
+	return (this->_field[index]);
 }
 
-void Contact::SetField(int index, std::string new_value)
+void Contact::setField(int index, std::string new_value)
 {
-	this->field[index][VALUE] = new_value;
+	this->_field[index][VALUE] = new_value;
 }
