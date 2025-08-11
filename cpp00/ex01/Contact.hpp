@@ -23,8 +23,6 @@ class Contact {
 		void printContactDetails();
 		std::string *getField(int index);
 		void setField(int index, std::string);
-		void formatOutput(std::string);
-		void formatOutput(int number);
 };
 
 

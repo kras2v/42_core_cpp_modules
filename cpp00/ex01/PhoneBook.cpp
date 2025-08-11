@@ -20,7 +20,7 @@ PhoneBook::~PhoneBook( void )
 
 void PhoneBook::showList()
 {
-	IOHelper::printTableHeader(this->_contacts);
+	IOHelper::printTableHeader(this->_contacts[0]);
 	for (size_t i = 0; i < MAX_CONTACT_AMOUNT && this->_contacts[i].getField(0)[VALUE] != ""; i++)
 	{
 		IOHelper::printTableRow(i, this->getContact(i));
@@ -70,9 +70,7 @@ void PhoneBook::search()
 	}
 }
 
-Contact *PhoneBook::getContact(int index)
+Contact PhoneBook::getContact(int index)
 {
-	if (index < 0 || index >= this->_contactsAmount)
-		return nullptr;
-	return (&this->_contacts[index]);
+	return (this->_contacts[index]);
 }

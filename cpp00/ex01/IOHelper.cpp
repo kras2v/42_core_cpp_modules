@@ -14,28 +14,44 @@ IOHelper::~IOHelper()
 	#endif
 }
 
-void IOHelper::printTableHeader(Contact *contact)
+void IOHelper::formatOutput(my_string string)
 {
-	if (contact == nullptr)
-		return ;
+	my_string buffer;
+	buffer = string.substr(0, 9);
+	int size = string.size();
+	if (size > 9)
+	{
+		my_cout << std::setw(WIDE_SIZE - 1);
+		my_cout << buffer << '.';
+	}
+	else
+	{
+		my_cout << std::setw(WIDE_SIZE);
+		my_cout << buffer;
+	}
+	my_cout << '|';
+}
+
+void IOHelper::printTableHeader(Contact contact)
+{
 	IOHelper::printLine('-', 45);
 	my_cout << '|';
-	contact->formatOutput("index");
+	IOHelper::formatOutput("index");
 	for (size_t i = 0; i < NUM_FIELDS - 2; i++)
 	{
-		contact->formatOutput(contact->getField(i)[KEY]);
+		IOHelper::formatOutput(contact.getField(i)[KEY]);
 	}
 	my_cout << my_endl;
 	IOHelper::printLine('-', 45);
 }
 
-void IOHelper::printTableRow(int index, Contact *contact)
+void IOHelper::printTableRow(int index, Contact contact)
 {
 	my_cout << '|';
-	contact->formatOutput((index));
+	IOHelper::formatOutput(std::to_string(index));
 	for (size_t j = 0; j < NUM_FIELDS - 2; j++)
 	{
-		contact->formatOutput(contact->getField(j)[VALUE]);
+		IOHelper::formatOutput(contact.getField(j)[VALUE]);
 	}
 	my_cout << my_endl;
 	IOHelper::printLine('-', 45);
