@@ -57,7 +57,7 @@ void	Account::displayAccountsInfos( void )
 	std::cout << "accounts:" << getNbAccounts() << ';'
 	<< "total:" << getTotalAmount() << ';'
 	<< "deposits:" << getNbDeposits() << ';'
-	<< "withdrawals:" << getNbWithdrawals() << '\n';
+	<< "withdrawals:" << getNbWithdrawals() << std::endl;
 }
 
 /*  [19920104_091532] index:0;amount:42;deposits:0;withdrawals:0 */
@@ -67,7 +67,7 @@ void	Account::displayStatus( void ) const
 	std::cout << "index:" << this->_accountIndex << ';'
 	<< "amount:" << checkAmount() << ';'
 	<< "deposits:" << this->_nbDeposits << ';'
-	<< "withdrawals:" << this->_nbWithdrawals << '\n';
+	<< "withdrawals:" << this->_nbWithdrawals << std::endl;
 }
 
 /* [19920104_091532] index:0;amount:42;created */
@@ -82,7 +82,7 @@ Account::Account( int initial_deposit )
 	_displayTimestamp();
 	std::cout << "index:" << this->_accountIndex << ';'
 	<< "amount:" << checkAmount() << ';'
-	<< "created" << '\n';
+	<< "created" << std::endl;
 }
 
 /* [19920104_091532] index:0;amount:47;closed */
@@ -91,7 +91,7 @@ Account::~Account( void )
 	_displayTimestamp();
 	std::cout << "index:" << this->_accountIndex << ';'
 	<< "amount:" << checkAmount() << ';'
-	<< "closed" << '\n';
+	<< "closed" << std::endl;
 }
 
 /* [19920104_091532] index:0;p_amount:42;deposit:5;amount:47;nb_deposits:1 */
@@ -105,7 +105,7 @@ void	Account::makeDeposit( int deposit )
 	<< "p_amount:" << checkAmount() << ';'
 	<< "deposit:" << deposit << ';'
 	<< "amount:" << checkAmount() + deposit << ';'
-	<< "nb_deposits:" << this->_nbDeposits << '\n';
+	<< "nb_deposits:" << this->_nbDeposits << std::endl;
 
 	this->_amount += deposit;
 	this->_totalAmount += deposit;
@@ -126,7 +126,7 @@ bool	Account::makeWithdrawal( int withdrawal )
 
 		std::cout << "withdrawal:" << withdrawal << ';'
 		<< "amount:" << checkAmount() - withdrawal << ';'
-		<< "nb_withdrawals:" << this->_nbWithdrawals << '\n';
+		<< "nb_withdrawals:" << this->_nbWithdrawals << std::endl;
 
 		this->_amount -= withdrawal;
 		this->_totalAmount -= withdrawal;
@@ -134,7 +134,7 @@ bool	Account::makeWithdrawal( int withdrawal )
 	}
 	else
 	{
-		std::cout << "withdrawal:refused" << '\n';
+		std::cout << "withdrawal:refused" << std::endl;
 		return (false);
 	}
 	return (true);
