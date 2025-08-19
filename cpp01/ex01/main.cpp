@@ -1,11 +1,12 @@
 #include "Zombie.hpp"
-#define N 10
+#define ZOMBIE_COUNT 10
+
+Zombie* zombieHorde( int N, std::string name );
 
 int main( void )
 {
-	Zombie bob = Zombie("leader");
-	Zombie* zombiiiiez = bob.zombieHorde(N, "bob");
-	for (size_t i = 0; i < N; i++)
+	Zombie* zombiiiiez = zombieHorde(ZOMBIE_COUNT, "bob");
+	for (size_t i = 0; i < ZOMBIE_COUNT; i++)
 	{
 		zombiiiiez[i].announce();
 	}

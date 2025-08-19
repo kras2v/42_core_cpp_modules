@@ -1,7 +1,7 @@
-NAME		=	account
-CPP_FLAGS	=	g++ -Wall -Wextra -Werror -std=c++98
-SRCS		=	Account.cpp \
-				tests.cpp
+NAME		=	harl
+CPP_FLAGS	=	g++ -Wall -Wextra -Werror -std=c++17
+SRCS		=	main.cpp \
+				Harl.cpp
 BUILT_DIR	=	objs/
 OBJS		=	$(SRCS:.cpp=.o)
 OBJECTS		=	$(addprefix $(BUILT_DIR), $(OBJS))

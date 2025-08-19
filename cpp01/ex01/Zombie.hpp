@@ -14,12 +14,11 @@ class Zombie
 {
 	private:
 		my_string _name;
-		Zombie();
 	public:
-		Zombie(my_string t_name);
+		Zombie();
 		~Zombie();
 		void announce( void );
-		Zombie* zombieHorde( int N, std::string name );
+		void setName( my_string name );
 };
 
 #endif

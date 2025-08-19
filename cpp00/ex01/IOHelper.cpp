@@ -84,7 +84,7 @@ my_string IOHelper::getUserInput(my_string prompt)
 	my_cout << prompt;
 	while (true)
 	{
-		if (!getline(my_cin, input_string))
+		if (getline(my_cin, input_string).fail())
 		{
 			my_cin.clear();
 			clearerr(stdin);

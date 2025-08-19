@@ -14,7 +14,6 @@ HumanB::HumanB( std::string t_name )
 	#ifdef DEBUG
 		std::cout << "HumanB constructor" << std::endl;
 	#endif
-	delete _weapon;
 }
 
 HumanB::~HumanB()
@@ -22,11 +21,12 @@ HumanB::~HumanB()
 	#ifdef DEBUG
 		std::cout << "HumanB destructor" << std::endl;
 	#endif
+	// delete _weapon;
 }
 
 void HumanB::attack()
 {
-	std::cout << this->_name << " attacks with their " << this->_weapon->getType();
+	std::cout << this->_name << " attacks with their " << this->_weapon->getType() << std::endl;
 }
 
 void HumanB::setWeapon(Weapon &t_weapon)

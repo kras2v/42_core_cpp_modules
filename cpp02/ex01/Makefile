@@ -1,7 +1,7 @@
-NAME		=	harlFilter
+NAME		=	fixed
 CPP_FLAGS	=	g++ -Wall -Wextra -Werror -std=c++98
 SRCS		=	main.cpp \
-				Harl.cpp
+				Fixed.cpp
 BUILT_DIR	=	objs/
 OBJS		=	$(SRCS:.cpp=.o)
 OBJECTS		=	$(addprefix $(BUILT_DIR), $(OBJS))

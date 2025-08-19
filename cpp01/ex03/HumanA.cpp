@@ -1,6 +1,6 @@
 #include "HumanA.hpp"
 
-HumanA::HumanA( std::string t_name, Weapon t_weapon )
+HumanA::HumanA( std::string t_name, Weapon &t_weapon )
 	: _name(t_name), _weapon(t_weapon)
 {
 	#ifdef DEBUG
@@ -17,5 +17,5 @@ HumanA::~HumanA()
 
 void HumanA::attack()
 {
-	std::cout << this->_name << " attacks with their " << this->_weapon.getType();
+	std::cout << this->_name << " attacks with their " << this->_weapon.getType() << std::endl;
 }
