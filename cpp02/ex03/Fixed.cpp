@@ -4,49 +4,31 @@ const int	Fixed::_numberOfFractionalBit = 8;
 
 Fixed::Fixed()
 {
-	#ifdef DEBUG
-		std::cout << "Fixed constructor" << std::endl;
-	#endif
 	this->_fixedPointNumberValue = 0;
 }
 
 Fixed::~Fixed()
 {
-	#ifdef DEBUG
-		std::cout << "Fixed destructor" << std::endl;
-	#endif
 }
 
 Fixed::Fixed(const Fixed &other)
 {
-	#ifdef DEBUG
-		std::cout << "Copy constructor called" << std::endl;
-	#endif
 	*this = other;
 }
 
 Fixed::Fixed(const int fixed_point_value)
 {
-	#ifdef DEBUG
-		std::cout << "Int constructor called" << std::endl;
-	#endif
 	this->_fixedPointNumberValue = fixed_point_value << this->_numberOfFractionalBit;
 }
 
 Fixed::Fixed(const float fixed_point_value)
 {
-	#ifdef DEBUG
-		std::cout << "Float constructor called" << std::endl;
-	#endif
 	float shifted_fixed_point_value = fixed_point_value * (1 << this->_numberOfFractionalBit);
 	this->_fixedPointNumberValue = roundf(shifted_fixed_point_value);
 }
 
 Fixed& Fixed::operator=(const Fixed &other)
 {
-	#ifdef DEBUG
-		std::cout << "Copy assignment operator called" << std::endl;
-	#endif
 	if (this != &other)
 	{
 		this->_fixedPointNumberValue = other.getRawBits();
