@@ -1,7 +1,9 @@
 NAME		=	fixed
 CPP_FLAGS	=	g++ -Wall -Wextra -Werror -std=c++17
 SRCS		=	main.cpp \
-				Point.cpp
+				Point.cpp \
+				bsp.cpp \
+				Fixed.cpp
 BUILT_DIR	=	objs/
 OBJS		=	$(SRCS:.cpp=.o)
 OBJECTS		=	$(addprefix $(BUILT_DIR), $(OBJS))

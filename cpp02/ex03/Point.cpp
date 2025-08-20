@@ -33,13 +33,19 @@ Point &Point::operator=(const Point &other)
 	return (*this);
 }
 
-Point::Point(const Point &other)
+Point::Point(const Point &other) : _x(other._x.toFloat()), _y(other._y.toFloat())
 {
 	#ifdef DEBUG
 		std::cout << "Copy constructor called" << std::endl;
 	#endif
-	*this = other;
 }
 
+Fixed Point::getY() const
+{
+	return (this->_y);
+}
 
-
+Fixed Point::getX() const
+{
+	return (this->_x);
+}

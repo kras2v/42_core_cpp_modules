@@ -5,26 +5,11 @@
 int main( void ) 
 {
 	{
-		Fixed a;
-		Fixed const b( 10 );
-		Fixed const c( 42.42f );
-		Fixed const d( b );
-		a = Fixed( 1234.4321f );
-
-		std::cout << "a is " << a << std::endl;
-		std::cout << "b is " << b << std::endl;
-		std::cout << "c is " << c << std::endl;
-		std::cout << "d is " << d << std::endl;
-		std::cout << "a is " << a.toInt() << " as integer" << std::endl;
-		std::cout << "b is " << b.toInt() << " as integer" << std::endl;
-		std::cout << "c is " << c.toInt() << " as integer" << std::endl;
-		std::cout << "d is " << d.toInt() << " as integer" << std::endl;
-	}
-
-	{
 		Fixed a( 1234.4321f );
 		Fixed const b( 10 );
 
+		std::cout << std::string(60, '-') << std::endl;
+		std::cout << "The 6 comparison operators: >, <, >=, <=, ==, and !=." << std::endl;
 		std::cout << a << " > " << b << " = " << ((a > b) ? "true": "false") << std::endl;
 		std::cout << a << " < " << b << " = " << ((a < b) ? "true": "false") << std::endl;
 		std::cout << a << " >= " << b << " = " << ((a >= b) ? "true": "false") << std::endl;
@@ -37,6 +22,8 @@ int main( void )
 		Fixed a( 5.05f );
 		Fixed b( 2 );
 
+		std::cout << std::string(60, '-') << std::endl;
+		std::cout << "The 4 arithmetic operators: +, -, *, and /." << std::endl;
 		std::cout << a << " + " << b << " = " << (a + b) << std::endl;
 		std::cout << a << " - " << b << " = " << (a - b) << std::endl;
 		std::cout << a << " * " << b << " = " << (a * b) << std::endl;
@@ -45,15 +32,30 @@ int main( void )
 
 	{
 		Fixed a;
-		Fixed const b( Fixed( 5.05f ) * Fixed( 2 ) );
+		Fixed const b( Fixed( 5.05f ) * Fixed( 2 ));
 
-		std::cout << a << std::endl;
-		std::cout << ++a << std::endl;
-		std::cout << a << std::endl;
-		std::cout << a++ << std::endl;
-		std::cout << a << std::endl;
-		std::cout << b << std::endl;
-		std::cout << Fixed::max( a, b ) << std::endl;
+		std::cout << std::string(60, '-') << std::endl;
+		std::cout << "The increment:" << std::endl;
+		std::cout << "a = " << a << std::endl;
+		std::cout << "a = " << ++a << std::endl;
+		std::cout << "a = " << a << std::endl;
+		std::cout << "a = " << a++ << std::endl;
+		std::cout << "a = " << a << std::endl;
+		std::cout << "b = " << b << std::endl;
+
+		std::cout << std::string(60, '-') << std::endl;
+		std::cout << "The decrement:" << std::endl;
+		std::cout << "a = " << a << std::endl;
+		std::cout << "a = " << --a << std::endl;
+		std::cout << "a = " << a << std::endl;
+		std::cout << "a = " << a-- << std::endl;
+		std::cout << "a = " << a << std::endl;
+		std::cout << "b = " << b << std::endl;
+
+		std::cout << std::string(60, '-') << std::endl;
+		std::cout << "Min and max:" << std::endl;
+		std::cout << "max: " << Fixed::max( a, b ) << std::endl;
+		std::cout << "min: " << Fixed::min( a, b ) << std::endl;
 	}
 	return 0;
 }

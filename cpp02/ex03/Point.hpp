@@ -2,6 +2,7 @@
 # define POINT_HPP
 
 # include "Fixed.hpp"
+# define ABS(x) (((x) < 0) ? -(x) : (x))
 
 class Point
 {
@@ -14,6 +15,9 @@ class Point
 		Point &operator=( const Point &other );
 		Point( const Point &other );
 		~Point( );
+
+		Fixed getY() const;
+		Fixed getX() const;
 };
 
 #endif 

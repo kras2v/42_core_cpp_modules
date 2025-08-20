@@ -25,12 +25,11 @@ Fixed::Fixed(const Fixed &other)
 	*this = other;
 }
 
-Fixed::Fixed(const int fixed_point_value)
+Fixed::Fixed(const int fixed_point_value) : _fixedPointNumberValue(fixed_point_value)
 {
 	#ifdef DEBUG
 		std::cout << "Int constructor called" << std::endl;
 	#endif
-	this->_fixedPointNumberValue = fixed_point_value << this->_numberOfFractionalBit;
 }
 
 Fixed::Fixed(const float fixed_point_value)
@@ -38,7 +37,7 @@ Fixed::Fixed(const float fixed_point_value)
 	#ifdef DEBUG
 		std::cout << "Float constructor called" << std::endl;
 	#endif
-	float shifted_fixed_point_value = fixed_point_value * (1 << this->_numberOfFractionalBit);
+	float shifted_fixed_point_value = fixed_point_value * (1 << Fixed::_numberOfFractionalBit);
 	this->_fixedPointNumberValue = roundf(shifted_fixed_point_value);
 }
 
@@ -66,12 +65,12 @@ void Fixed::setRawBits( int const raw )
 
 float Fixed::toFloat( void ) const
 {
-	return ((float)this->_fixedPointNumberValue / (1 << this->_numberOfFractionalBit));
+	return ((float)this->_fixedPointNumberValue / (1 << Fixed::_numberOfFractionalBit));
 }
 
 int Fixed::toInt( void ) const
 {
-	return (this->_fixedPointNumberValue >> this->_numberOfFractionalBit);
+	return (this->_fixedPointNumberValue >> Fixed::_numberOfFractionalBit);
 }
 
 std::ostream& operator<<(std::ostream &ofs, const Fixed &other)
@@ -129,16 +128,16 @@ Fixed	Fixed::operator-( const Fixed &other )
 Fixed	Fixed::operator*( const Fixed &other )
 {
 	Fixed fixed;
-	int res = (long long)other.getRawBits() * (long long)this->getRawBits();
-	res >>= this->_numberOfFractionalBit;
-	fixed.setRawBits(res);
+	long long res = (long long)other.getRawBits() * (long long)this->getRawBits();
+	res = res >> Fixed::_numberOfFractionalBit;
+	fixed.setRawBits((int)res);
 	return (fixed);
 }
 
 Fixed	Fixed::operator/( const Fixed &other )
 {
 	Fixed fixed;
-	int res = ((long long)other.getRawBits() << this->_numberOfFractionalBit) / (long long)this->getRawBits();
+	int res = ((long long)other.getRawBits() << Fixed::_numberOfFractionalBit) / this->getRawBits();
 	fixed.setRawBits(res);
 	return (fixed);
 }
