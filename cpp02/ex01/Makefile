@@ -1,5 +1,5 @@
 NAME		=	fixed
-CPP_FLAGS	=	g++ -Wall -Wextra -Werror -std=c++98
+CPP_FLAGS	=	g++ -Wall -Wextra -Werror -std=c++17
 SRCS		=	main.cpp \
 				Fixed.cpp
 BUILT_DIR	=	objs/

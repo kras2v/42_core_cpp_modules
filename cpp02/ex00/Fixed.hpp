@@ -8,13 +8,15 @@ class Fixed
 	private:
 		int 				_fixedPointNumberValue;
 		static const int	_numberOfFractionalBit;
+
 	public:
 		Fixed();
 		~Fixed();
-		Fixed(Fixed &other);
-		Fixed &operator=(const Fixed &other);
-		int getRawBits( void ) const;
-		void setRawBits( int const raw );
+		Fixed(const Fixed &other);
+
+		Fixed	&operator=(const Fixed &other);
+		int		getRawBits( void ) const;
+		void	setRawBits( int const raw );
 };
 
 #endif
