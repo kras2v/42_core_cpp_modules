@@ -1,5 +1,5 @@
 NAME		=	sed_is_for_losers
-CPP_FLAGS	=	g++ -g -Wall -Wextra -Werror -std=c++17
+CPP_FLAGS	=	c++ -g -Wall -Wextra -Werror -std=c++17
 SRCS		=	Replacer.cpp \
 				main.cpp
 BUILT_DIR	=	objs/

@@ -5,6 +5,11 @@
 # include <string>
 # include <iomanip>
 
+# define RED			"\e[0;31m"
+# define BLUE			"\e[0;34m"
+# define WHITE			"\e[0;37m"
+# define RESET			"\e[0m"
+
 class ClapTrap
 {
 	private:
@@ -12,6 +17,10 @@ class ClapTrap
 		unsigned int _hitPoint;
 		unsigned int _energyPoint;
 		unsigned int _attackDamage;
+
+		static const unsigned int _defaultHitPoint;
+		static const unsigned int _defaultEnergyPoint;
+		static const unsigned int _defaultAttackDamage;
 
 	public:
 		ClapTrap();
@@ -25,10 +34,14 @@ class ClapTrap
 		void beRepaired(unsigned int amount);
 		void showStatistics();
 
-		std::string getName() const;
+		virtual std::string getName() const;
 		unsigned int getHitPoint() const;
 		unsigned int getEnergyPoint() const;
 		unsigned int getAttackDamage() const;
+
+		unsigned int getDefaultHitPoint() const;
+		unsigned int getDefaultEnergyPoint() const;
+		unsigned int getDefaultAttackDamage() const;
 
 		void setName( const std::string name );
 		void setHitPoint( unsigned int hitP );

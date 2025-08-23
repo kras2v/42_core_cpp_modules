@@ -1,12 +1,12 @@
-#ifndef SCAVTRAP_HPP
-# define SCAVTRAP_HPP
+#ifndef FRAGTRAP_HPP
+# define FRAGTRAP_HPP
 
 # include "ClapTrap.hpp"
 # include <iostream>
 # include <string>
 # include <iomanip>
 
-class ScavTrap : public ClapTrap
+class FragTrap : virtual public ClapTrap
 {
 	private:
 		static const unsigned int _defaultHitPoint;
@@ -14,15 +14,15 @@ class ScavTrap : public ClapTrap
 		static const unsigned int _defaultAttackDamage;
 
 	public:
-		ScavTrap();
-		~ScavTrap();
-		ScavTrap(const ScavTrap &other);
-		ScavTrap(std::string _name);
+		FragTrap();
+		~FragTrap();
+		FragTrap(const FragTrap &other);
+		FragTrap(std::string _name);
 
-		ScavTrap &operator=(const ScavTrap &other);
+		FragTrap &operator=(const FragTrap &other);
 
 		void attack(const std::string& target);
-		void guardGate( void );
+		void highFivesGuys(void);
 		void showStatistics( void );
 
 		unsigned int getDefaultHitPoint() const;

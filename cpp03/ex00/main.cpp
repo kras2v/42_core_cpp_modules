@@ -18,7 +18,7 @@ int main()
 	{
 		ClapTrap bob("Bob");
 		ClapTrap tom("Tom");
-		for (size_t i = 0; i < 5; i++)
+		for (size_t i = 0; bob.getEnergyPoint() > 0 && tom.getEnergyPoint() > 0; i++)
 		{
 			bob.attack("Tom");
 			tom.takeDamage(bob.getAttackDamage());
@@ -33,6 +33,7 @@ int main()
 				break;
 		}
 		bob.beRepaired(1);
+		tom.beRepaired(1);
 	}
 	return (0);
 }

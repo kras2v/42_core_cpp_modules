@@ -1,5 +1,5 @@
 NAME		=	account
-CPP_FLAGS	=	g++ -Wall -Wextra -Werror -std=c++98
+CPP_FLAGS	=	c++ -Wall -Wextra -Werror -std=c++98
 SRCS		=	Account.cpp \
 				tests.cpp
 BUILT_DIR	=	objs/

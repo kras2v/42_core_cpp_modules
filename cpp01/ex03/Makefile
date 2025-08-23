@@ -1,5 +1,5 @@
 NAME		=	unnecessary_violence
-CPP_FLAGS	=	g++ -Wall -Wextra -Werror -std=c++11
+CPP_FLAGS	=	c++ -Wall -Wextra -Werror -std=c++11
 SRCS		=	main.cpp \
 				Weapon.cpp \
 				HumanA.cpp \

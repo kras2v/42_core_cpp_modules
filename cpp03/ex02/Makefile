@@ -1,7 +1,8 @@
-NAME		=	ScavTrap
+NAME		=	FragTrap
 CPP_FLAGS	=	c++ -Wall -Wextra -Werror -std=c++17
 SRCS		=	main.cpp \
 				ClapTrap.cpp \
+				FragTrap.cpp \
 				ScavTrap.cpp
 BUILT_DIR	=	objs/
 OBJS		=	$(SRCS:.cpp=.o)

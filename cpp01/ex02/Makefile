@@ -1,5 +1,5 @@
 NAME		=	HI_THIS_IS_BRAIN
-CPP_FLAGS	=	g++ -Wall -Wextra -Werror -std=c++17
+CPP_FLAGS	=	c++ -Wall -Wextra -Werror -std=c++17
 SRCS		=	main.cpp
 BUILT_DIR	=	objs/
 OBJS		=	$(SRCS:.cpp=.o)

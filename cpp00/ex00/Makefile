@@ -1,5 +1,5 @@
 NAME		=	megaphone
-CPP_FLAGS	=	g++ -Wall -Wextra -Werror -std=c++17
+CPP_FLAGS	=	c++ -Wall -Wextra -Werror -std=c++17
 SRCS		=	megaphone.cpp 
 BUILT_DIR	=	objs/
 OBJS		=	$(SRCS:.cpp=.o)

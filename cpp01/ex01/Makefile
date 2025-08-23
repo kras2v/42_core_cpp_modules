@@ -1,5 +1,5 @@
 NAME		=	BraiiiiiiinnnzzzZ
-CPP_FLAGS	=	g++ -Wall -Wextra -Werror -std=c++17
+CPP_FLAGS	=	c++ -Wall -Wextra -Werror -std=c++17
 SRCS		=	main.cpp \
 				Zombie.cpp \
 				zombieHorde.cpp

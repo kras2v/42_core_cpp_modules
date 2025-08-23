@@ -6,7 +6,7 @@
 # include <string>
 # include <iomanip>
 
-class ScavTrap : public ClapTrap
+class ScavTrap : virtual public ClapTrap
 {
 	private:
 		static const unsigned int _defaultHitPoint;
