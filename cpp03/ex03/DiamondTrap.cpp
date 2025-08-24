@@ -14,6 +14,7 @@ DiamondTrap::DiamondTrap(const DiamondTrap &other)
 	ScavTrap(other),
 	_name(other.getName())
 {
+	*this = other;
 	std::cout << "DiamondTrap " << this->getName() << " copy constructor" << std::endl;
 	this->setHitPoint(this->FragTrap::getDefaultHitPoint());
 	this->setEnergyPoint(this->ScavTrap::getDefaultEnergyPoint());

@@ -14,6 +14,7 @@ FragTrap::FragTrap() : ClapTrap()
 
 FragTrap::FragTrap(const FragTrap &other) : ClapTrap(other)
 {
+	*this = other;
 	std::cout << "FragTrap " << this->getName() << " copy constructor" << std::endl;
 	this->setAttackDamage(this->_defaultAttackDamage);
 	this->setEnergyPoint(this->_defaultEnergyPoint);

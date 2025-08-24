@@ -10,11 +10,11 @@ class Point
 		const Fixed _x; 
 		const Fixed _y; 
 	public:
-		Point( );
+		Point( void );
 		Point( const float x, const float y );
 		Point &operator=( const Point &other );
 		Point( const Point &other );
-		~Point( );
+		~Point( void );
 
 		Fixed getY() const;
 		Fixed getX() const;

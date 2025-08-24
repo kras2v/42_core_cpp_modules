@@ -141,7 +141,7 @@ Fixed	Fixed::operator--( int )
 	return (fixed);
 }
 
-Fixed	Fixed::operator++( )
+Fixed	Fixed::operator++( void )
 {
 	Fixed fixed;
 	int res = this->getRawBits() + 1;
@@ -150,7 +150,7 @@ Fixed	Fixed::operator++( )
 	return (fixed);
 }
 
-Fixed	Fixed::operator--( )
+Fixed	Fixed::operator--( void )
 {
 	Fixed fixed;
 	int res = this->getRawBits() - 1;

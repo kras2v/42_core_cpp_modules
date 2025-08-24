@@ -14,6 +14,7 @@ ScavTrap::ScavTrap() : ClapTrap()
 
 ScavTrap::ScavTrap(const ScavTrap &other) : ClapTrap(other)
 {
+	*this = other;
 	std::cout << "ScavTrap " << this->getName() << " copy constructor" << std::endl;
 	this->setAttackDamage(_defaultAttackDamage);
 	this->setEnergyPoint(_defaultEnergyPoint);

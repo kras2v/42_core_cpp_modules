@@ -38,8 +38,8 @@ class Fixed
 
 		Fixed		  operator++( int );
 		Fixed		  operator--( int );
-		Fixed		  operator++( );
-		Fixed		  operator--( );
+		Fixed		  operator++( void );
+		Fixed		  operator--( void );
 
 		static Fixed  &min( Fixed &lhs, Fixed &rhs );
 		static Fixed  &max( Fixed &lhs, Fixed &rhs );

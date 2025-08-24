@@ -4,7 +4,10 @@
 int main()
 {
 	ScavTrap bob("Bob");
-	ClapTrap tom("Tom");
+
+	ClapTrap tom(bob);
+	std::cout << "Name after copy constructor: " << tom.getName() << std::endl;
+	tom.setName("Tom");
 
 	bob.showStatistics();
 	tom.showStatistics();
