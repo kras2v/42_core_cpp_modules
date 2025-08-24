@@ -8,12 +8,27 @@ int main()
 	DiamondTrap bob("bob");
 	bob.showStatistics();
 	bob.whoAmI();
-	std::cout << std::endl;
+	bob.guardGate();
+	bob.highFivesGuys();
 
-	DiamondTrap tom(bob);
+	std::cout << std::string(50, '-') << std::endl << std::endl;
+
+	ScavTrap tom = bob;
 	tom.showStatistics();
+	tom.guardGate();
+
+	std::cout << std::string(50, '-') << std::endl << std::endl;
+
+	FragTrap alex(bob);
+	alex.showStatistics();
+	alex.highFivesGuys();
 
 	tom.attack("bob");
-	bob.takeDamage(bob.getAttackDamage());
-	return 0;
+	bob.takeDamage(tom.getAttackDamage());
+	tom.attack("alex");
+	alex.takeDamage(tom.getAttackDamage());
+	bob.showStatistics();
+	tom.showStatistics();
+	alex.showStatistics();
+	return (0);
 }

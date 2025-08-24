@@ -1,23 +1,23 @@
 #include "DiamondTrap.hpp"
 
-DiamondTrap::DiamondTrap()
-	: ClapTrap()
+DiamondTrap::DiamondTrap() : _name("defaultDiamond")
 {
-	std::cout << "DiamondTrap " << this->ScavTrap::getName() << " default constructor" << std::endl;
-	this->FragTrap::setHitPoint(this->FragTrap::getDefaultHitPoint());
-	this->ScavTrap::setEnergyPoint(this->ScavTrap::getDefaultEnergyPoint());
-	this->FragTrap::setAttackDamage(this->FragTrap::getDefaultAttackDamage());
+	std::cout << "DiamondTrap " << this->getName() << " default constructor" << std::endl;
+	this->setHitPoint(this->FragTrap::getDefaultHitPoint());
+	this->setEnergyPoint(this->ScavTrap::getDefaultEnergyPoint());
+	this->setAttackDamage(this->FragTrap::getDefaultAttackDamage());
 }
 
 DiamondTrap::DiamondTrap(const DiamondTrap &other)
 	:ClapTrap(other),
 	FragTrap(other),
-	ScavTrap(other)
+	ScavTrap(other),
+	_name(other.getName())
 {
-	std::cout << "DiamondTrap " << this->ScavTrap::getName() << " copy constructor" << std::endl;
-	this->FragTrap::setHitPoint(this->FragTrap::getDefaultHitPoint());
-	this->ScavTrap::setEnergyPoint(this->ScavTrap::getDefaultEnergyPoint());
-	this->FragTrap::setAttackDamage(this->FragTrap::getDefaultAttackDamage());
+	std::cout << "DiamondTrap " << this->getName() << " copy constructor" << std::endl;
+	this->setHitPoint(this->FragTrap::getDefaultHitPoint());
+	this->setEnergyPoint(this->ScavTrap::getDefaultEnergyPoint());
+	this->setAttackDamage(this->FragTrap::getDefaultAttackDamage());
 }
 
 DiamondTrap::DiamondTrap(std::string name)
@@ -26,24 +26,24 @@ DiamondTrap::DiamondTrap(std::string name)
 	ScavTrap(name + "_clap_name"),
 	_name(name)
 {
-	std::cout << "DiamondTrap " << this->ScavTrap::getName() << " custom constructor" << std::endl;
-	this->FragTrap::setHitPoint(this->FragTrap::getDefaultHitPoint());
-	this->ScavTrap::setEnergyPoint(this->ScavTrap::getDefaultEnergyPoint());
-	this->FragTrap::setAttackDamage(this->FragTrap::getDefaultAttackDamage());
+	std::cout << "DiamondTrap " << this->getName() << " custom constructor" << std::endl;
+	this->setHitPoint(this->FragTrap::getDefaultHitPoint());
+	this->setEnergyPoint(this->ScavTrap::getDefaultEnergyPoint());
+	this->setAttackDamage(this->FragTrap::getDefaultAttackDamage());
 }
 
 DiamondTrap::~DiamondTrap()
 {
-	std::cout << "DiamondTrap " << this->ScavTrap::getName() << " destructor" << std::endl;
+	std::cout << "DiamondTrap " << this->getName() << " destructor" << std::endl;
 }
 
 DiamondTrap &DiamondTrap::operator=(const DiamondTrap &other)
 {
-	std::cout << "DiamondTrap copy assignment " << this->ScavTrap::getName() << " operator called" << std::endl;
 	if (this != &other)
 	{
 		ScavTrap::operator=(other);
 	}
+	std::cout << "DiamondTrap copy assignment " << this->getName() << " operator called" << std::endl;
 	return (*this);
 }
 

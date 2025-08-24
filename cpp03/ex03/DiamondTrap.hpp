@@ -22,7 +22,7 @@ class DiamondTrap : public FragTrap, public ScavTrap
 		DiamondTrap &operator=(const DiamondTrap &other);
 
 		using ScavTrap::attack;
-		void guardGate( void );
+
 		void showStatistics( void );
 		std::string getName() const;
 		void setName( const std::string name );
