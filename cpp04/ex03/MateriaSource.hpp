@@ -2,13 +2,17 @@
 # define MATERIASOURCE_HPP
 
 # include "IMateriaSource.hpp"
+# include "AMateria.hpp"
 # include <iostream>
+# include <iomanip>
+# define MAX_MATERIAS_AMOUNT 4
 
 class MateriaSource : public IMateriaSource
 {
 	private:
-		AMateria	*_slots[4];
-		unsigned int _materiaAmount;
+		AMateria		**_createdMaterias;
+		AMateria		*_slots[MAX_MATERIAS_AMOUNT];
+		unsigned int	_createdMateriaAmount;
 
 	public:
 		MateriaSource();
@@ -19,6 +23,9 @@ class MateriaSource : public IMateriaSource
 
 		void learnMateria( AMateria* materia ) override;
 		AMateria* createMateria( std::string const &type ) override;
+
+
+		void MateriaSource::showCreatedMaterias( void );
 };
 
 #endif

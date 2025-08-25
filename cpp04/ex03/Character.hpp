@@ -2,13 +2,15 @@
 # define CHARACTER_HPP
 
 # include "AMateria.hpp"
+# include <iomanip>
 # include <iostream>
+
+# define MAX_MATERIAS_AMOUNT 4
 
 class Character : public ICharacter
 {
 	private:
-		AMateria	*_slots[4];
-		unsigned int _materiaAmount;
+		AMateria	*_slots[MAX_MATERIAS_AMOUNT];
 		std::string	_name;
 
 	public:
@@ -22,6 +24,7 @@ class Character : public ICharacter
 		virtual void equip(AMateria* m) override;
 		virtual void unequip(int idx) override;
 		virtual void use(int idx, ICharacter& target) override;
+		virtual void showInventory( void ) override;
 };
 
 #endif
