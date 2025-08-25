@@ -23,7 +23,7 @@ ScavTrap::ScavTrap(const ScavTrap &other) : ClapTrap(other)
 
 ScavTrap::ScavTrap(std::string name) : ClapTrap(name)
 {
-	std::cout << "ScavTrap " << this->getName() << " custom constructor" << std::endl;
+	std::cout << "ScavTrap " << this->getName() << " parameterized constructor" << std::endl;
 	this->setAttackDamage(_defaultAttackDamage);
 	this->setEnergyPoint(_defaultEnergyPoint);
 	this->setHitPoint(_defaultHitPoint);

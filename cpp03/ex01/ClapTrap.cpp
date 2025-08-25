@@ -25,7 +25,7 @@ ClapTrap::ClapTrap(std::string name)
 	_energyPoint(_defaultEnergyPoint),
 	_attackDamage(_defaultAttackDamage)
 {
-	std::cout << "ClapTrap " << this->getName() << " custom constructor" << std::endl;
+	std::cout << "ClapTrap " << this->getName() << " parameterized constructor" << std::endl;
 }
 
 ClapTrap &ClapTrap::operator=(const ClapTrap &other)

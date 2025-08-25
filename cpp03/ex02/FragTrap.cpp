@@ -23,7 +23,7 @@ FragTrap::FragTrap(const FragTrap &other) : ClapTrap(other)
 
 FragTrap::FragTrap(std::string name) : ClapTrap(name)
 {
-	std::cout << "FragTrap " << this->getName() << " custom constructor" << std::endl;
+	std::cout << "FragTrap " << this->getName() << " parameterized constructor" << std::endl;
 	this->setAttackDamage(this->_defaultAttackDamage);
 	this->setEnergyPoint(this->_defaultEnergyPoint);
 	this->setHitPoint(this->_defaultHitPoint);

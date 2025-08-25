@@ -27,7 +27,7 @@ DiamondTrap::DiamondTrap(std::string name)
 	ScavTrap(name + "_clap_name"),
 	_name(name)
 {
-	std::cout << "DiamondTrap " << this->getName() << " custom constructor" << std::endl;
+	std::cout << "DiamondTrap " << this->getName() << " parameterized constructor" << std::endl;
 	this->setHitPoint(this->FragTrap::getDefaultHitPoint());
 	this->setEnergyPoint(this->ScavTrap::getDefaultEnergyPoint());
 	this->setAttackDamage(this->FragTrap::getDefaultAttackDamage());
