@@ -8,7 +8,8 @@ MateriaList::MateriaList ( ) : _currentSize(0), _head(nullptr)
 MateriaList::MateriaList ( AMateria *newNode ) : _currentSize(0), _head(nullptr)
 {
 	std::cout << "MateriaList default constructor" << std::endl;
-	addBack(newNode);
+	if (newNode)
+		addBack(newNode);
 }
 
 MateriaList::MateriaList ( const MateriaList &other )  : _currentSize(0), _head(nullptr)

@@ -79,6 +79,7 @@ std::string const & Character::getName() const
 
 void Character::equip(AMateria* m)
 {
+	if (m == nullptr) return;
 	for (size_t i = 0; i < MAX_MATERIAS_AMOUNT; i++)
 	{
 		if (this->_slots[i] == nullptr)

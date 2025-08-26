@@ -6,14 +6,19 @@
 #include <iostream>
 
 int main() {
-	IMateriaSource* src = new MateriaSource();
+	MateriaSource* src = new MateriaSource();
 	src->learnMateria(new Ice());
 	src->learnMateria(new Cure());
+
+	MateriaSource* src2 = new MateriaSource();
+	src2->learnMateria(new Ice());
+	src2->learnMateria(new Cure());
+	*src2 = *src;
 
 	Character alice("Alice");
 
 	// Equip Materias
-	alice.equip(src->createMateria("ice"));
+	alice.equip(src->createMateria("RAAAAAAAAAAAANDOM"));
 	alice.equip(src->createMateria("cure"));
 	alice.equip(src->createMateria("ice"));
 
@@ -59,6 +64,7 @@ int main() {
 		bob.use(i, bob);
 	}
 	delete src;
+	delete src2;
 
 	std::cout << "\n--- Test finished ---\n";
 	return 0;

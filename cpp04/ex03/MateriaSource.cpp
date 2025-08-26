@@ -55,6 +55,7 @@ MateriaSource& MateriaSource::operator=(const MateriaSource& other)
 
 void MateriaSource::learnMateria( AMateria* materia )
 {
+	if (materia == nullptr) return ;
 	for (size_t i = 0; i < MAX_MATERIAS_AMOUNT; i++)
 	{
 		if (this->_slots[i] == nullptr)
@@ -69,7 +70,7 @@ AMateria* MateriaSource::createMateria( std::string const &type )
 {
 	for (size_t i = 0; i < MAX_MATERIAS_AMOUNT; i++)
 	{
-		if (this->_slots[i]->getType() == type)
+		if (this->_slots[i] && this->_slots[i]->getType() == type)
 		{
 			this->_materiaList.addBack(this->_slots[i]->clone());
 			return (this->_materiaList.getLast()->curr);
