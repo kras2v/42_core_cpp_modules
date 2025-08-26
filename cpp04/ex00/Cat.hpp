@@ -7,9 +7,6 @@
 
 class Cat : public Animal
 {
-	private:
-		using Animal::_type;
-
 	public:
 		Cat ( void );
 		Cat ( const Cat &other );
