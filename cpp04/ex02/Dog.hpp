@@ -9,7 +9,6 @@
 class Dog : public AAnimal
 {
 	protected:
-		std::string _type;
 		Brain*		_brain;
 
 	public:
@@ -19,8 +18,6 @@ class Dog : public AAnimal
 
 		Dog & 			    operator=( const Dog &other);
 		void 			    makeSound( void ) const override;
-		const std::string&  getType  ( void ) const override;
-		void 			    setType  ( const std::string &type ) override;
 		const Brain&	    getBrain  ( void ) const;
 		void			    setBrain  ( const Brain &Brain );
 };

@@ -4,7 +4,9 @@ Ice::Ice( void )
 	: AMateria("ice"),
 	_type("ice")
 {
-	std::cout << "Ice default constructor" << std::endl;
+	#ifndef DEBUG
+		std::cout << "Ice default constructor" << std::endl;
+	#endif
 }
 
 Ice::Ice( const Ice &other )
@@ -12,21 +14,24 @@ Ice::Ice( const Ice &other )
 	_type("ice")
 {
 	*this = other;
-	std::cout << "Ice copy constructor" << std::endl;
+	#ifndef DEBUG
+		std::cout << "Ice copy constructor" << std::endl;
+	#endif
 }
 
 Ice::~Ice()
 {
-	std::cout << "Ice destructor" << std::endl;
+	#ifndef DEBUG
+		std::cout << "Ice destructor" << std::endl;
+	#endif
 }
 
 Ice & Ice::operator=( const Ice &other)
 {
-	if (this != &other)
-	{
-
-	}
-	std::cout << "Ice copy assignment operator" << std::endl;
+	(void)other;
+	#ifndef DEBUG
+		std::cout << "Ice copy assignment operator" << std::endl;
+	#endif
 	return (*this);
 }
 

@@ -7,9 +7,6 @@
 
 class Dog : public Animal
 {
-	protected:
-		std::string _type;
-
 	public:
 		Dog ( void );
 		Dog ( const Dog &other );
@@ -17,8 +14,6 @@ class Dog : public Animal
 
 		Dog & 			    operator=( const Dog &other);
 		void 			    makeSound( void ) const override;
-		const std::string&  getType  ( void ) const override;
-		void 			    setType  ( const std::string &type ) override;
 };
 
 #endif

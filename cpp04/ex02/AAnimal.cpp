@@ -2,18 +2,31 @@
 
 AAnimal::AAnimal( void ) : _type("Animal")
 {
-	std::cout << "AAnimal default constructor" << std::endl;
+	#ifndef DEBUG
+		std::cout << "AAnimal default constructor" << std::endl;
+	#endif
+}
+
+AAnimal::AAnimal ( std::string type ) : _type(type)
+{
+	#ifndef DEBUG
+		std::cout << "AAnimal parametrized constructor" << std::endl;
+	#endif
 }
 
 AAnimal::~AAnimal()
 {
-	std::cout << "AAnimal destructor" << std::endl;
+	#ifndef DEBUG
+		std::cout << "AAnimal destructor" << std::endl;
+	#endif
 }
 
 AAnimal::AAnimal( const AAnimal &other )
 {	
 	*this = other;
-	std::cout << "AAnimal copy constructor" << std::endl;
+	#ifndef DEBUG
+		std::cout << "AAnimal copy constructor" << std::endl;
+	#endif
 }
 
 AAnimal& AAnimal::operator=( const AAnimal &other)
@@ -22,7 +35,9 @@ AAnimal& AAnimal::operator=( const AAnimal &other)
 	{
 		this->setType(other.getType());
 	}
-	std::cout << "AAnimal copy assignment operator" << std::endl;
+	#ifndef DEBUG
+		std::cout << "AAnimal copy assignment operator" << std::endl;
+	#endif
 	return (*this);
 }
 

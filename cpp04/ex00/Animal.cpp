@@ -2,17 +2,30 @@
 
 Animal::Animal( void ) : _type("Animal")
 {
-	std::cout << "Animal default constructor" << std::endl;
+	#ifndef DEBUG
+		std::cout << "Animal default constructor" << std::endl;
+	#endif
+}
+
+Animal::Animal ( std::string type ) : _type(type)
+{
+	#ifndef DEBUG
+		std::cout << "Animal parametrized constructor" << std::endl;
+	#endif
 }
 
 Animal::~Animal()
 {
-	std::cout << "Animal destructor" << std::endl;
+	#ifndef DEBUG
+		std::cout << "Animal destructor" << std::endl;
+	#endif
 }
 
 Animal::Animal( const Animal &other )
 {	
-	std::cout << "Animal copy constructor" << std::endl;
+	#ifndef DEBUG
+		std::cout << "Animal copy constructor" << std::endl;
+	#endif
 	*this = other;
 }
 
@@ -22,7 +35,9 @@ Animal& Animal::operator=( const Animal &other)
 	{
 		this->setType(other.getType());
 	}
-	std::cout << "Animal copy assignment operator" << std::endl;
+	#ifndef DEBUG
+		std::cout << "Animal copy assignment operator" << std::endl;
+	#endif
 	return (*this);
 }
 

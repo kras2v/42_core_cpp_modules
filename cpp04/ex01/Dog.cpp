@@ -1,21 +1,27 @@
 #include "Dog.hpp"
 
-Dog::Dog( void ) : _type("Dog")
+Dog::Dog( void ) : Animal("Dog")
 {
 	this->_brain = new Brain;
-	std::cout << "Dog default constructor" << std::endl;
+	#ifndef DEBUG
+		std::cout << "Dog default constructor" << std::endl;
+	#endif
 }
 
 Dog::~Dog()
 {
 	delete this->_brain;
-	std::cout << "Dog destructor" << std::endl;
+	#ifndef DEBUG
+		std::cout << "Dog destructor" << std::endl;
+	#endif
 }
 
 Dog::Dog( const Dog &other ) : Animal(other), _brain(nullptr)
 {	
 	*this = other;
-	std::cout << "Dog copy constructor" << std::endl;
+	#ifndef DEBUG
+		std::cout << "Dog copy constructor" << std::endl;
+	#endif
 }
 
 Dog & Dog::operator=( const Dog &other)
@@ -27,21 +33,13 @@ Dog & Dog::operator=( const Dog &other)
 			delete this->_brain;
 		this->_brain = new Brain(*other._brain);
 	}
-	std::cout << "Dog copy assignment operator" << std::endl;
+	#ifndef DEBUG
+		std::cout << "Dog copy assignment operator" << std::endl;
+	#endif
 	return (*this);
 }
 
 void Dog::makeSound( void ) const
 {
 	std::cout << "bark bark bark" << std::endl;
-}
-
-const std::string &Dog::getType( void ) const
-{
-	return (this->_type);
-}
-
-void Dog::setType( const std::string &type )
-{
-	this->_type = type;
 }

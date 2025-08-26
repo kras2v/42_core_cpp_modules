@@ -2,6 +2,7 @@
 # define CHARACTER_HPP
 
 # include "AMateria.hpp"
+# include "MateriaList.hpp"
 # include <iomanip>
 # include <iostream>
 
@@ -10,6 +11,7 @@
 class Character : public ICharacter
 {
 	private:
+		MateriaList	_unequipMateriaList;
 		AMateria	*_slots[MAX_MATERIAS_AMOUNT];
 		std::string	_name;
 
@@ -25,6 +27,8 @@ class Character : public ICharacter
 		virtual void unequip(int idx) override;
 		virtual void use(int idx, ICharacter& target) override;
 		virtual void showInventory( void ) override;
+		virtual void showUneqipedMaterias(void) override;
+
 };
 
 #endif

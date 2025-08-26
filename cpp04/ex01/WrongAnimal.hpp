@@ -4,16 +4,18 @@
 # include <iostream>
 # include <string>
 
-class AWrongAnimal
+class WrongAnimal
 {
 	protected:
 		std::string _type;
-	public:
-		AWrongAnimal();
-		AWrongAnimal( const AWrongAnimal &other );
-		virtual ~AWrongAnimal();
 
-		AWrongAnimal &			  operator=( const AWrongAnimal &other);
+	public:
+		WrongAnimal();
+		WrongAnimal ( std::string type );
+		WrongAnimal( const WrongAnimal &other );
+		virtual ~WrongAnimal();
+
+		WrongAnimal &			  operator=( const WrongAnimal &other);
 		void 					  makeSound( void ) const;
 		virtual const std::string &getType ( void ) const;
 		virtual void			  setType  ( const std::string &type );

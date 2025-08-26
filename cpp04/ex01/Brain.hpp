@@ -7,8 +7,7 @@
 class Brain
 {
 	private:
-		static const unsigned int _ideas_count;
-		std::string				  _ideas[100];
+		std::string	_ideas[100];
 
 	public:
 		Brain ( void );

@@ -2,6 +2,7 @@
 # define MATERIASOURCE_HPP
 
 # include "IMateriaSource.hpp"
+# include "MateriaList.hpp"
 # include "AMateria.hpp"
 # include <iostream>
 # include <iomanip>
@@ -10,22 +11,20 @@
 class MateriaSource : public IMateriaSource
 {
 	private:
-		AMateria		**_createdMaterias;
+		MateriaList		_materiaList;
 		AMateria		*_slots[MAX_MATERIAS_AMOUNT];
-		unsigned int	_createdMateriaAmount;
 
 	public:
-		MateriaSource();
-		MateriaSource( const MateriaSource &other );
-		~MateriaSource();
+		MateriaSource ( );
+		MateriaSource ( const MateriaSource &other );
+		~MateriaSource( );
 
-		MateriaSource &operator=( const MateriaSource &other );
+		MateriaSource&	operator=( const MateriaSource &other );
 
-		void learnMateria( AMateria* materia ) override;
-		AMateria* createMateria( std::string const &type ) override;
+		void			learnMateria( AMateria* materia ) override;
+		AMateria*		createMateria( std::string const &type ) override;
 
-
-		void MateriaSource::showCreatedMaterias( void );
+		void			showCreatedMaterias( void );
 };
 
 #endif

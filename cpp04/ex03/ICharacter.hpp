@@ -10,7 +10,7 @@ class ICharacter
 	protected:
 		ICharacter(  );
 		ICharacter( const ICharacter &other );
-		ICharacter& operator=( const ICharacter &other );
+		virtual ICharacter& operator=( const ICharacter &other );
 
 	public:
 		virtual ~ICharacter();
@@ -19,6 +19,7 @@ class ICharacter
 		virtual void unequip(int idx) = 0;
 		virtual void use(int idx, ICharacter& target) = 0;
 		virtual void showInventory( void ) = 0;
+		virtual void showUneqipedMaterias(void) = 0;
 };
 
 #endif

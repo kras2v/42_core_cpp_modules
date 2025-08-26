@@ -1,21 +1,27 @@
 #include "WrongCat.hpp"
 
-WrongCat::WrongCat( void ) : _type("WrongCat")
+WrongCat::WrongCat( void ) : AWrongAnimal("WrongCat")
 {
 	this->_brain = new Brain;
-	std::cout << "WrongCat default constructor" << std::endl;
+	#ifndef DEBUG
+		std::cout << "WrongCat default constructor" << std::endl;
+	#endif
 }
 
 WrongCat::~WrongCat()
 {
 	delete this->_brain;
-	std::cout << "WrongCat destructor" << std::endl;
+	#ifndef DEBUG
+		std::cout << "WrongCat destructor" << std::endl;
+	#endif
 }
 
 WrongCat::WrongCat( const WrongCat &other ) : AWrongAnimal(other), _brain(nullptr)
 {	
 	*this = other;
-	std::cout << "WrongCat copy constructor" << std::endl;
+	#ifndef DEBUG
+		std::cout << "WrongCat copy constructor" << std::endl;
+	#endif
 }
 
 WrongCat & WrongCat::operator=( const WrongCat &other)
@@ -27,21 +33,13 @@ WrongCat & WrongCat::operator=( const WrongCat &other)
 			delete this->_brain;
 		this->_brain = new Brain(*other._brain);
 	}
-	std::cout << "WrongCat copy assignment operator" << std::endl;
+	#ifndef DEBUG
+		std::cout << "WrongCat copy assignment operator" << std::endl;
+	#endif
 	return (*this);
 }
 
 void WrongCat::makeSound( void ) const
 {
 	std::cout << "meow meow meow" << std::endl;
-}
-
-const std::string &WrongCat::getType( void ) const
-{
-	return (this->_type);
-}
-
-void WrongCat::setType( const std::string &type )
-{
-	this->_type = type;
 }

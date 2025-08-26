@@ -1,26 +1,29 @@
 #include "Brain.hpp"
 
-const unsigned int Brain::_ideas_count = 100;
-
 Brain::Brain ( void )
 {
-	std::cout << "Brain default constructor" << std::endl;
+	#ifndef DEBUG
+		std::cout << "Brain default constructor" << std::endl;
+	#endif
 }
 
 Brain::Brain ( const Brain &other )
 {
-	std::cout << "Brain copy constructor" << std::endl;
+	#ifndef DEBUG
+		std::cout << "Brain copy constructor" << std::endl;
+	#endif
 	*this = other;
 }
 
 Brain::~Brain()
 {
-	std::cout << "Brain destructor" << std::endl;
+	#ifndef DEBUG
+		std::cout << "Brain destructor" << std::endl;
+	#endif
 }
 
 Brain &Brain::operator=(const Brain &other)
 {
-	std::cout << "Brain copy assignment operator" << std::endl;
 	if (this != &other)
 	{
 		for (size_t i = 0; i < 100; i++)
@@ -28,6 +31,9 @@ Brain &Brain::operator=(const Brain &other)
 			this->_ideas[i] = other._ideas[i];
 		}
 	}
+	#ifndef DEBUG
+		std::cout << "Brain copy assignment operator" << std::endl;
+	#endif
 	return (*this);
 }
 

@@ -11,6 +11,7 @@ class AWrongAnimal
 	public:
 		AWrongAnimal();
 		AWrongAnimal( const AWrongAnimal &other );
+		AWrongAnimal ( std::string type );
 		virtual ~AWrongAnimal();
 
 		AWrongAnimal &			  operator=( const AWrongAnimal &other);

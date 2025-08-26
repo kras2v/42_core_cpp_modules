@@ -36,7 +36,7 @@ void testPolymorphism() {
 
 void testWrongAnimal() {
 	std::cout << "\n--- WrongAnimal Polymorphism ---\n";
-	const AWrongAnimal* wa = new WrongCat();
+	const WrongAnimal* wa = new WrongCat();
 	std::cout << "wa type: " << wa->getType() << std::endl;
 	wa->makeSound();
 	delete wa;

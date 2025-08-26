@@ -6,21 +6,27 @@ AMateria::AMateria( const AMateria &other ) = default;
 
 AMateria::AMateria( std::string const & type ) : _type(type)
 {
-	std::cout << "AMateria parametriezd constructor" << std::endl;
+	#ifndef DEBUG
+		std::cout << "AMateria parametriezd constructor" << std::endl;
+	#endif
 }
 
 AMateria::~AMateria()
 {
-	std::cout << "AMateria destructor" << std::endl;
+	#ifndef DEBUG
+		std::cout << "AMateria destructor" << std::endl;
+	#endif
 }
 
 AMateria & AMateria::operator=( const AMateria &other)
 {
 	if (this != &other)
 	{
-		
+		this->_type = other._type;
 	}
-	std::cout << "AMateria copy assignment operator" << std::endl;
+	#ifndef DEBUG
+		std::cout << "AMateria copy assignment operator" << std::endl;
+	#endif
 	return (*this);
 }
 
@@ -31,12 +37,5 @@ std::string const & AMateria::getType() const
 
 void AMateria::use(ICharacter& target)
 {
-	if (this->_type == "ice")
-	{
-		std::cout << "* shoots an ice bolt at " << target.getName() << " *";
-	}
-	else if (this->_type == "cure")
-	{
-		std::cout << "* heals " << target.getName() << "’s wounds *";
-	}
+	this->use(target);
 }

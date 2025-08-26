@@ -16,7 +16,7 @@ all : $(NAME)
 $(NAME) : $(OBJECTS)
 	$(CPP_FLAGS) $(OBJECTS) -o $@
 
-debug: CPP_FLAGS += -Ddebug
+debug: CPP_FLAGS += -DDEBUG
 debug: $(OBJECTS) $(NAME)
 
 $(BUILT_DIR)%.o : %.cpp

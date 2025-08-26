@@ -6,10 +6,9 @@
 # include <iostream>
 # include <string>
 
-class WrongCat : public AWrongAnimal
+class WrongCat : public WrongAnimal
 {
 	protected:
-		std::string _type;
 		Brain*		_brain;
 
 	public:
@@ -19,8 +18,6 @@ class WrongCat : public AWrongAnimal
 
 		WrongCat &			operator=( const WrongCat &other );
 		void			    makeSound( void ) const;
-		const std::string&  getType  ( void ) const override;
-		void			    setType  ( const std::string &type ) override;
 		const Brain&	    getBrain  ( void ) const;
 		void			    setBrain  ( const Brain &Brain );
 };

@@ -2,18 +2,31 @@
 
 AWrongAnimal::AWrongAnimal( void ) : _type("WrongAnimal")
 {
-	std::cout << "Wrong animal default constructor" << std::endl;
+	#ifndef DEBUG
+		std::cout << "Wrong animal default constructor" << std::endl;
+	#endif
+}
+
+AWrongAnimal::AWrongAnimal( std::string type ) : _type(type)
+{
+	#ifndef DEBUG
+		std::cout << "Wrong animal param constructor" << std::endl;
+	#endif
 }
 
 AWrongAnimal::~AWrongAnimal()
 {
-	std::cout << "Wrong animal destructor" << std::endl;
+	#ifndef DEBUG
+		std::cout << "Wrong animal destructor" << std::endl;
+	#endif
 }
 
 AWrongAnimal::AWrongAnimal( const AWrongAnimal &other )
 {	
 	*this = other;
-	std::cout << "Wrong animal copy constructor" << std::endl;
+	#ifndef DEBUG
+		std::cout << "Wrong animal copy constructor" << std::endl;
+	#endif
 }
 
 AWrongAnimal & AWrongAnimal::operator=( const AWrongAnimal &other)
@@ -22,7 +35,9 @@ AWrongAnimal & AWrongAnimal::operator=( const AWrongAnimal &other)
 	{
 		this->setType(other.getType());
 	}
-	std::cout << "Wrong animal copy assignment operator" << std::endl;
+	#ifndef DEBUG
+		std::cout << "Wrong animal copy assignment operator" << std::endl;
+	#endif
 	return (*this);
 }
 

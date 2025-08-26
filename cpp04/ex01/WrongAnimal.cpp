@@ -1,42 +1,57 @@
 #include "WrongAnimal.hpp"
 
-AWrongAnimal::AWrongAnimal( void ) : _type("WrongAnimal")
+WrongAnimal::WrongAnimal( void ) : _type("WrongAnimal")
 {
-	std::cout << "Wrong animal default constructor" << std::endl;
+	#ifndef DEBUG
+		std::cout << "Wrong animal default constructor" << std::endl;
+	#endif
 }
 
-AWrongAnimal::~AWrongAnimal()
+WrongAnimal::WrongAnimal( std::string type ) : _type(type)
 {
-	std::cout << "Wrong animal destructor" << std::endl;
+	#ifndef DEBUG
+		std::cout << "Wrong animal default constructor" << std::endl;
+	#endif
 }
 
-AWrongAnimal::AWrongAnimal( const AWrongAnimal &other )
+WrongAnimal::~WrongAnimal()
+{
+	#ifndef DEBUG
+		std::cout << "Wrong animal destructor" << std::endl;
+	#endif
+}
+
+WrongAnimal::WrongAnimal( const WrongAnimal &other )
 {	
-	std::cout << "Wrong animal copy constructor" << std::endl;
+	#ifndef DEBUG
+		std::cout << "Wrong animal copy constructor" << std::endl;
+	#endif
 	*this = other;
 }
 
-AWrongAnimal & AWrongAnimal::operator=( const AWrongAnimal &other)
+WrongAnimal & WrongAnimal::operator=( const WrongAnimal &other)
 {
 	if (this != &other)
 	{
 		this->setType(other.getType());
 	}
-	std::cout << "Wrong animal copy assignment operator" << std::endl;
+	#ifndef DEBUG
+		std::cout << "Wrong animal copy assignment operator" << std::endl;
+	#endif
 	return (*this);
 }
 
-void AWrongAnimal::makeSound( void ) const
+void WrongAnimal::makeSound( void ) const
 {
 	std::cout << "*Wrong animal sound*" << std::endl;
 }
 
-const std::string &AWrongAnimal::getType( void ) const
+const std::string &WrongAnimal::getType( void ) const
 {
 	return (this->_type);
 }
 
-void AWrongAnimal::setType( const std::string &type )
+void WrongAnimal::setType( const std::string &type )
 {
 	this->_type = type;
 }

@@ -15,7 +15,10 @@ int main() {
 		animals[i] = i < ANIMAL_COUNT / 2 ? (Animal*)new Dog() : (Animal*)new Cat();
 
 	for (size_t i = 0; i < ANIMAL_COUNT; i++)
+	{
+		std::cout << animals[i]->getType() << "\t";
 		animals[i]->makeSound();
+	}
 
 	Cat cat;
 	{
