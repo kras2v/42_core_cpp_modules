@@ -64,14 +64,7 @@ Character & Character::operator=( const Character &other)
 			if (other._slots[i])
 				this->_slots[i] = other._slots[i]->clone();
 		}
-		t_materia_node *tmp = other._unequipMateriaList.getFirst();
-		if (this->_unequipMateriaList.getSize())
-			this->_unequipMateriaList.clear();
-		while (tmp)
-		{
-			this->_unequipMateriaList.addBack(tmp->curr->clone());
-			tmp = tmp->next;
-		}
+		this->_unequipMateriaList = other._unequipMateriaList;
 	}
 	#ifndef DEBUG
 		std::cout << "Character copy assignment operator" << std::endl;

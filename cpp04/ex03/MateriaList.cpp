@@ -23,14 +23,21 @@ MateriaList::~MateriaList( )
 	this->clear();
 }
 
-MateriaList&	MateriaList::operator=( const MateriaList &other )
+MateriaList& MateriaList::operator=(const MateriaList& other)
 {
 	if (this != &other)
 	{
-
+		this->clear();
+		t_materia_node* tmp = other.getFirst();
+		while (tmp)
+		{
+			this->addBack(tmp->curr->clone());
+			tmp = tmp->next;
+		}
 	}
+
 	std::cout << "MateriaList copy assignment operator" << std::endl;
-	return (*this);
+	return *this;
 }
 
 t_materia_node *MateriaList::createNewNode( AMateria *curr )

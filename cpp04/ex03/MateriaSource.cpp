@@ -31,16 +31,26 @@ MateriaSource::~MateriaSource()
 	#endif
 }
 
-MateriaSource &MateriaSource::operator=( const MateriaSource &other )
+MateriaSource& MateriaSource::operator=(const MateriaSource& other)
 {
 	if (this != &other)
 	{
-		// COPY
+		for (size_t i = 0; i < MAX_MATERIAS_AMOUNT; i++)
+		{
+			if (this->_slots[i])
+			{
+				delete this->_slots[i];
+				this->_slots[i] = nullptr;
+			}
+			if (other._slots[i])
+				this->_slots[i] = other._slots[i]->clone();
+		}
+		this->_materiaList = other._materiaList;
 	}
 	#ifndef DEBUG
 		std::cout << "MateriaSource copy assignment operator" << std::endl;
 	#endif
-	return (*this);
+	return *this;
 }
 
 void MateriaSource::learnMateria( AMateria* materia )
