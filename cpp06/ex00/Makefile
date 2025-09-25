@@ -1,5 +1,5 @@
-NAME		=	bureaucrat
-CPP_FLAGS	=	c++ -Wall -Wextra -Werror -std=c++17
+NAME		=	ScalarConverter
+CPP_FLAGS	=	c++ -Wall -Wextra -Werror -Wno-unused-parameter -std=c++17
 SRCS		=	main.cpp \
 				ScalarConverter.cpp
 

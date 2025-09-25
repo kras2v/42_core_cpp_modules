@@ -7,18 +7,29 @@
 class ScalarConverter
 {
 	private:
-		ScalarConverter(/* args */);
-		ScalarConverter(const ScalarConverter &other);
-		ScalarConverter &operator=(const ScalarConverter &other);
-		~ScalarConverter();
+		typedef enum e_types
+		{
+			CHAR,
+			NON_PRINT_CHAR,
+			INT,
+			FLOAT,
+			DOUBLE,
+			NONE
+		} t_types;
 
-		static void charType(const std::string literal);
-		static void intType(const std::string literal);
-		static void floatType(const std::string literal);
-		static void doubleType(const std::string literal);
+		ScalarConverter() = delete;
+		ScalarConverter(const ScalarConverter &other) = delete;
+		virtual ~ScalarConverter() = 0;
+		ScalarConverter &operator=(const ScalarConverter &other) = delete;
+
+		static void charType(const char *literal);
+		static void intType(const char *literal);
+		static void floatType(const char *literal);
+		static void doubleType(const char *literal);
+		static t_types getType(const char *literal);
 
 	public:
-		static void convert(const std::string literal);
+		static void convert(const char *literal);
 };
 
 #endif /* SCALAR_CONVERTER_HPP */
