@@ -16,6 +16,7 @@ class Form
 		const int			_gradeRequiredToSign;
 		const int			_gradeRequiredToExecute;
 
+		int 				checkGrade(int grade) const;
 	public:
 		Form();
 		Form(const Form &other);
@@ -28,7 +29,6 @@ class Form
 		int					getGradeRequiredToSign() const;
 		int					getGradeRequiredToExecute() const;
 
-		int 				checkGrade(int grade) const;
 		void 				beSigned(Bureaucrat &bureaucrat);
 
 		class GradeTooHighException : public std::exception

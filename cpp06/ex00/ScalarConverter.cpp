@@ -1,12 +1,11 @@
 #include "ScalarConverter.hpp"
 
-ScalarConverter::t_types ScalarConverter::getType(const char *literal)
+t_types getType(const char *literal)
 {
 	size_t pos;
-	double double_n;
 	try
 	{
-		double_n = std::stod(literal, &pos);
+		std::stod(literal, &pos);
 		if (literal[pos] != '\0' && literal[pos] != 'f')
 			return (NONE);
 	}
@@ -15,12 +14,10 @@ ScalarConverter::t_types ScalarConverter::getType(const char *literal)
 		return (NONE);
 	}
 
-	float float_n;
 	try
 	{
-		float_n = std::stof(literal, &pos);
-		std::cout << literal[pos] << std::endl;
-		if ((literal[pos] == 'f' && literal[pos + 1] != '\0') || literal[pos] != '\0')
+		std::stof(literal, &pos);
+		if ((literal[pos] == 'f' && literal[pos + 1] != '\0') && literal[pos] != '\0')
 			return (NONE);
 	}
 	catch(const std::exception& e)
@@ -31,7 +28,7 @@ ScalarConverter::t_types ScalarConverter::getType(const char *literal)
 	ssize_t int_n;
 	try
 	{
-		int_n = std::stol(literal);
+		int_n = std::stoi(literal);
 		if (int_n > INT32_MAX || int_n < INT32_MIN)
 			return (FLOAT);
 	}
@@ -42,71 +39,71 @@ ScalarConverter::t_types ScalarConverter::getType(const char *literal)
 
 	if (int_n > 255 || int_n < 0)
 		return (INT);
-	else if (!isprint(int_n))
-		return (NON_PRINT_CHAR);
 	return (CHAR);
 }
 
 void ScalarConverter::convert(const char *literal)
 {
 	t_types type;
-	if (isprint(literal[0]) && literal[1] == '\0')
+	if (!isdigit(literal[0]) && isprint(literal[0]) && literal[1] == '\0')
 	{
-		float fl = literal[0];
-		if (isprint(fl))
-			std::cout << "char: " << static_cast<char>(fl) << std::endl;
-		else
-			std::cout << "char: Non displayable" << std::endl;
-		std::cout << "int: " << static_cast<int>(fl) << std::endl;
-		if (fl - static_cast<int>(fl) == 0)
-			std::cout << "float: " << fl << ".0f" << std::endl;
-		else
-			std::cout << "float: " << fl << "f" << std::endl;
+		uint8_t char_n = literal[0];
+		std::cout << "char: " << literal << std::endl;
+		std::cout << "int: " << static_cast<int>(char_n) << std::endl;
 
-		if (fl - static_cast<int>(fl) == 0)
-			std::cout << "double: " << fl << ".0" << std::endl;
+		if (char_n - static_cast<int>(char_n) == 0)
+		{
+			std::cout << "float: " << char_n << ".0f" << std::endl;
+			std::cout << "double: " << char_n << ".0" << std::endl;
+		}
 		else
-			std::cout << "double: " << fl << std::endl;
+		{
+			std::cout << "float: " << char_n << "f" << std::endl;
+			std::cout << "double: " << char_n << std::endl;
+		}
 		return ;
 	}
 	
 	type = getType(literal);
-	std::cout << "TYPE: " << type << std::endl;
-	if (type == NONE || type == DOUBLE || type == FLOAT || type == INT)
+	if (type > CHAR)
 		std::cout << "char: impossible" << std::endl;
 
-	if (type == NONE || type == DOUBLE || type == FLOAT)
+	if (type > INT)
 		std::cout << "int: impossible" << std::endl;
 
-	if (type == NONE || type == DOUBLE)
+	if (type > FLOAT)
 		std::cout << "float: impossible" << std::endl;
 
-	if (type == NONE)
+	if (type > DOUBLE)
 		std::cout << "double: impossible" << std::endl;
 
-	if (type == NON_PRINT_CHAR)
-		std::cout << "char: Non displayable" << std::endl;
-
 	if (type == CHAR)
-		std::cout << "char: " << static_cast<char>(std::stod(literal)) << std::endl;
-
-	if (type == INT || type == NON_PRINT_CHAR || type == CHAR)
-		std::cout << "int: " << static_cast<int>(std::stod(literal)) << std::endl;
-
-	if (type == DOUBLE || type == FLOAT || type == INT || type == CHAR || type == NON_PRINT_CHAR)
 	{
-		float fl = std::stod(literal);
-		if (type != DOUBLE)
-		{
-			if (fl - static_cast<int>(fl) == 0)
-				std::cout << "float: " << fl << ".0f" << std::endl;
-			else
-				std::cout << "float: " << fl << "f" << std::endl;
-		}
-
-		if (fl - static_cast<int>(fl) == 0)
-			std::cout << "double: " << fl << ".0" << std::endl;
+		uint8_t char_n = std::stoi(literal);
+		if (isprint(char_n))
+			std::cout << "char: " << static_cast<char>(std::stoi(literal)) << std::endl;
 		else
-			std::cout << "double: " << fl << std::endl;
+			std::cout << "char: Non displayable" << std::endl;
+	}
+
+	if (type <= INT)
+		std::cout << "int: " << static_cast<int>(std::stoi(literal)) << std::endl;
+
+	if (type <= FLOAT)
+	{
+		float float_n = std::stof(literal);
+		if (float_n - static_cast<int>(float_n) == 0)
+			std::cout << "float: " << float_n << ".0f" << std::endl;
+		else
+			std::cout << "float: " << float_n << "f" << std::endl;
+	}
+
+	if (type <= DOUBLE)
+	{
+		float double_n = std::stod(literal);
+		if (double_n - static_cast<int>(double_n) == 0)
+			std::cout << "double: " << double_n << ".0" << std::endl;
+		else
+			std::cout << "double: " << double_n << std::endl;
 	}
 }

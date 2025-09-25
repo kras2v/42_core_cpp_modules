@@ -109,7 +109,7 @@ std::ostream &operator<<(std::ostream &ofs, Form &form)
 {
 	ofs << "Form \"" << form.getName() << std::endl
 		<< "  Signed: " << (form.getIsSigned() ? "yes" : "no") << "\n"
-		<< "  Grade required to sign:	" << form.getGradeRequiredToSign() << "\n"
-		<< "  Grade required to execute: " << form.getGradeRequiredToExecute();
+		<< "  Grade required to sign:\t" << form.getGradeRequiredToSign() << "\n"
+		<< "  Grade required to execute:\t" << form.getGradeRequiredToExecute();
 	return ofs;
 }

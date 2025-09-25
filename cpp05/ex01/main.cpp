@@ -63,8 +63,8 @@ int main()
 	testFormCreation("FormA", 10, 20, "Valid form");
 	testFormCreation("FormLow", 151, 20, "Sign grade too low");
 	testFormCreation("FormHigh", 0, 20, "Sign grade too high");
-	testFormCreation("FormExecLow", 10, 151, "Exec grade too low");
-	testFormCreation("FormExecHigh", 10, 0, "Exec grade too high");
+	testFormCreation("FormExecLow", 10, 250, "Exec grade too low");
+	testFormCreation("FormExecHigh", 10, -1000, "Exec grade too high");
 
 	newTestsTitle("Form signing tests:");
 	Form form1("TopSecret", 5, 10);

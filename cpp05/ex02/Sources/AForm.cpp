@@ -73,6 +73,11 @@ const char *AForm::GradeTooLowException::what() const noexcept
 	return ("Grade is too low!");
 }
 
+const char *AForm::FormIsNotSignedException::what() const noexcept
+{
+	return ("Form is not signed!");
+}
+
 bool	AForm::getIsSigned() const
 {
 	return this->_isSigned;
@@ -105,11 +110,29 @@ void AForm::beSigned(Bureaucrat &bureaucrat)
 	}
 }
 
+void AForm::execute(Bureaucrat const &executor) const
+{
+	if (!this->_isSigned)
+	{
+		throw AForm::FormIsNotSignedException();
+	}
+	if (executor.getGrade() <= this->_gradeRequiredToExecute)
+	{
+		action();
+		std::cout << executor.getName() << " executed " << this->getName() << std::endl;
+	}
+	else
+	{
+		throw AForm::GradeTooLowException();
+	}
+}
+
 std::ostream &operator<<(std::ostream &ofs, AForm &form)
 {
-	ofs << "Form \"" << form.getName() << std::endl
-		<< "  Signed: " << (form.getIsSigned() ? "yes" : "no") << "\n"
-		<< "  Grade required to sign:	" << form.getGradeRequiredToSign() << "\n"
-		<< "  Grade required to execute: " << form.getGradeRequiredToExecute();
+	ofs << "Form: \"" << form.getName() << "\"" << std::endl
+		<< "- Signed:\t\t\t" << (form.getIsSigned() ? "yes" : "no") <<  std::endl
+		<< "- Grade required to sign:\t" << form.getGradeRequiredToSign() <<  std::endl
+		<< "- Grade required to execute:\t" << form.getGradeRequiredToExecute() << std::endl;
+	ofs << form.getAdditionalInfo() << std::endl;
 	return ofs;
 }

@@ -7,6 +7,8 @@
 # include <string>
 # include <iostream>
 
+class AForm;
+
 class Bureaucrat
 {
 	private:
@@ -20,12 +22,14 @@ class Bureaucrat
 		Bureaucrat &operator=(const Bureaucrat &other);
 
 		Bureaucrat(const std::string name, int grade);
-		const std::string &getName() const;
-		int getGrade() const;
+		const std::string &	getName() const;
+		int 				getGrade() const;
 
-		void increment();
-		void decrement();
-		void checkGrade(int grade) const;
+		void				increment();
+		void				decrement();
+		void				checkGrade(int grade) const;
+
+		bool				signForm(AForm &form);
 
 		class GradeTooHighException : public std::exception
 		{

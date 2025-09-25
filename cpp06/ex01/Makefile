@@ -1,7 +1,8 @@
-NAME		=	ScalarConverter
-CPP_FLAGS	=	c++ -Wall -Wextra -Werror -std=c++17
+NAME		=	Serializer
+CPP_FLAGS	=	c++ -Wall -Wextra -Werror -Wno-unused-parameter -std=c++17
 SRCS		=	main.cpp \
-				ScalarConverter.cpp
+				Serializer.cpp \
+				Data.cpp
 
 BUILT_DIR	=	objs/
 OBJS		=	$(SRCS:.cpp=.o)
