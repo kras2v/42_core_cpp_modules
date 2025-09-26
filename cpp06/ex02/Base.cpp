@@ -2,5 +2,7 @@
 
 Base::~Base()
 {
-	std::cout << "Base destructor" << std::endl;
+	#ifdef DEBUG
+		std::cout << "Base destructor" << std::endl;
+	#endif
 }

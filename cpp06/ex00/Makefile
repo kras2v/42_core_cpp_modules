@@ -1,4 +1,4 @@
-NAME		=	ScalarConverter
+NAME		=	convert
 CPP_FLAGS	=	c++ -Wall -Wextra -Werror -std=c++17
 SRCS		=	main.cpp \
 				ScalarConverter.cpp

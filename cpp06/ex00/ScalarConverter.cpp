@@ -2,7 +2,18 @@
 
 t_types getType(const char *literal)
 {
+	if (!isdigit(literal[0]) && isprint(literal[0]) && literal[1] == '\0')
+		return (CHAR);
+
 	size_t pos;
+	try
+	{
+		std::stoi(literal, &pos);
+		if (literal[pos] == '\0')
+			return (INT);
+	}
+	catch(const std::exception& e) { }
+
 	try
 	{
 		std::stod(literal, &pos);
@@ -17,93 +28,128 @@ t_types getType(const char *literal)
 	try
 	{
 		std::stof(literal, &pos);
-		if ((literal[pos] == 'f' && literal[pos + 1] != '\0') && literal[pos] != '\0')
+		if ((literal[pos] == 'f' && literal[pos + 1] == '\0'))
+			return (FLOAT);
+		if (literal[pos] != '\0')
 			return (NONE);
 	}
-	catch(const std::exception& e)
-	{
-		return (DOUBLE);
-	}
+	catch(const std::exception& e) { }
+	return (DOUBLE);
+}
 
-	ssize_t int_n;
-	try
+void printCharLiteral(int int_n)
+{
+	if (int_n < 0 || int_n > 127)
 	{
-		int_n = std::stoi(literal);
-		if (int_n > INT32_MAX || int_n < INT32_MIN)
-			return (FLOAT);
+		std::cout << "char: impossible" << std::endl;
 	}
-	catch(const std::exception& e)
+	else if (!isprint(int_n))
 	{
-		return (FLOAT);
+		std::cout << "char: Non displayable" << std::endl;
 	}
+	else
+	{
+		std::cout << "char: '" << static_cast<char>(int_n) << "'" << std::endl;
+	}
+}
 
-	if (int_n > 255 || int_n < 0)
-		return (INT);
-	return (CHAR);
+void printInFloatPointFormat(double d)
+{
+	if (d <= INT32_MAX && d >= INT32_MIN)
+		std::cout << "double: " << std::fixed << std::setprecision(1) << d << std::endl;
+	else
+		std::cout << "double: " << std::scientific << std::setprecision(1) << d << std::endl;
+}
+
+void printInFloatPointFormat(float f)
+{
+	if (f <= INT32_MAX && f >= INT32_MIN)
+		std::cout << "float: " << std::fixed << std::setprecision(1) << f << "f" << std::endl;
+	else
+		std::cout << "float: " << std::scientific << std::setprecision(1) << f << "f" << std::endl;
 }
 
 void ScalarConverter::convert(const char *literal)
 {
-	t_types type;
-	if (!isdigit(literal[0]) && isprint(literal[0]) && literal[1] == '\0')
+	switch (getType(literal))
 	{
-		uint8_t char_n = literal[0];
-		std::cout << "char: " << literal << std::endl;
-		std::cout << "int: " << static_cast<int>(char_n) << std::endl;
-
-		if (char_n - static_cast<int>(char_n) == 0)
+		case CHAR:
 		{
-			std::cout << "float: " << char_n << ".0f" << std::endl;
-			std::cout << "double: " << char_n << ".0" << std::endl;
+			std::cout << "char: '" << literal << "'" << std::endl;
+			std::cout << "int: " << static_cast<int>(literal[0]) << std::endl;
+			std::cout << "float: " << static_cast<float>(literal[0]) << ".0f" << std::endl;
+			std::cout << "double: " << static_cast<double>(literal[0]) << ".0" << std::endl;
+			break;
 		}
-		else
+
+		case INT:
 		{
-			std::cout << "float: " << char_n << "f" << std::endl;
-			std::cout << "double: " << char_n << std::endl;
+			int int_n = std::stoi(literal);
+			printCharLiteral(int_n);
+			std::cout << "int: " << int_n << std::endl;
+			printInFloatPointFormat(static_cast<float>(int_n));
+			printInFloatPointFormat(static_cast<double>(int_n));
+			break;
 		}
-		return ;
-	}
-	
-	type = getType(literal);
-	if (type > CHAR)
-		std::cout << "char: impossible" << std::endl;
 
-	if (type > INT)
-		std::cout << "int: impossible" << std::endl;
+		case FLOAT:
+		{
+			float float_n = std::stof(literal);
 
-	if (type > FLOAT)
-		std::cout << "float: impossible" << std::endl;
+			try
+			{
+				if (float_n > static_cast<double>(INT32_MAX) || float_n < static_cast<double>(INT32_MIN))
+					throw std::exception();
 
-	if (type > DOUBLE)
-		std::cout << "double: impossible" << std::endl;
+				std::stoi(literal);
+				printCharLiteral(static_cast<int>(float_n));
+				std::cout << "int: " << static_cast<int>(float_n) << std::endl;
+			}
+			catch(const std::exception& e)
+			{
+				std::cout << "char: impossible" << std::endl;
+				std::cout << "int: impossible" << std::endl;
+			}
 
-	if (type == CHAR)
-	{
-		uint8_t char_n = std::stoi(literal);
-		if (isprint(char_n))
-			std::cout << "char: " << static_cast<char>(std::stoi(literal)) << std::endl;
-		else
-			std::cout << "char: Non displayable" << std::endl;
-	}
+			printInFloatPointFormat(float_n);
+			printInFloatPointFormat(static_cast<double>(float_n));
+			break;
+		}
 
-	if (type <= INT)
-		std::cout << "int: " << static_cast<int>(std::stoi(literal)) << std::endl;
+		case DOUBLE:
+		{
+			double double_n = std::stod(literal);
 
-	if (type <= FLOAT)
-	{
-		float float_n = std::stof(literal);
-		if (float_n - static_cast<int>(float_n) == 0)
-			std::cout << "float: " << float_n << ".0f" << std::endl;
-		else
-			std::cout << "float: " << float_n << "f" << std::endl;
-	}
+			try
+			{
+				std::stoi(literal);
+				printCharLiteral(static_cast<int>(double_n));
+				std::cout << "int: " << static_cast<int>(double_n) << std::endl;
+			}
+			catch(const std::exception& e)
+			{
+				std::cout << "char: impossible" << std::endl;
+				std::cout << "int: impossible" << std::endl;
+			}
 
-	if (type <= DOUBLE)
-	{
-		float double_n = std::stod(literal);
-		if (double_n - static_cast<int>(double_n) == 0)
-			std::cout << "double: " << double_n << ".0" << std::endl;
-		else
-			std::cout << "double: " << double_n << std::endl;
+			try
+			{
+				std::stof(literal);
+				printInFloatPointFormat(static_cast<float>(double_n));
+			}
+			catch(const std::exception& e)
+			{
+				std::cerr << "float: impossible" << '\n';
+			}
+			printInFloatPointFormat(double_n);
+			break;
+		}
+
+		default:
+			std::cout << "char: impossible" << std::endl;
+			std::cout << "int: impossible" << std::endl;
+			std::cout << "float: impossible" << std::endl;
+			std::cout << "double: impossible" << std::endl;
+			break;
 	}
 }
