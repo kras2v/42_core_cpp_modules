@@ -5,11 +5,11 @@ template <typename T>
 class Array
 {
 	private:
-		T[] _elements;
+		T *_elements;
 
 	public:
-		Array();
-		~Array();
+		Array<T>();
+		~Array<T>();
 };
 
 #endif /* ARRAY_HPP */
