@@ -1,17 +1,20 @@
 NAME = program
 
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -MMD -MP -std=c++17 -Iincludes
+
+CXXFLAGS = -Wall -Wextra -Werror -MMD -MP -std=c++17 -Iincludes -Itests
 
 SRC_DIR = sources
+TST_DIR = tests
 OBJ_DIR = objects
 
 SRCS = \
-	$(SRC_DIR)/Array.cpp \
-	$(SRC_DIR)/main.cpp
+	$(SRC_DIR)/main.cpp \
+	$(SRC_DIR)/Point.cpp \
+	$(TST_DIR)/Randomizer.cpp
 
-OBJS = $(SRCS:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
-DEPS = $(SRCS:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.d)
+OBJS = $(patsubst %.cpp, $(OBJ_DIR)/%.o, $(notdir $(SRCS)))
+DEPS = $(OBJS:.o=.d)
 
 all: $(OBJ_DIR) $(NAME)
 
@@ -24,6 +27,9 @@ $(NAME): $(OBJS)
 -include $(DEPS)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(OBJ_DIR)/%.o: $(TST_DIR)/%.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
