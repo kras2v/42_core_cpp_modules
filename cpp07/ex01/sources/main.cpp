@@ -1,5 +1,5 @@
-#include "iter.hpp"
-#include "functions.hpp"
+#include "iter.tpp"
+#include "Functions.hpp"
 #include "Person.hpp"
 
 int main()
@@ -30,12 +30,13 @@ int main()
 	}
 	std::cout << std::endl;
 	{
-		Person people[5] =
+		Person people[3] =
 		{
 			Person("bob1", 1000),
 			Person("bob2", 2000),
 			Person("bob3", 3000)
 		};
+
 		iter(people, 3, printInFormat);
 		std::cout << std::endl;
 

@@ -7,9 +7,7 @@ SRC_DIR = sources
 OBJ_DIR = objects
 
 SRCS = \
-	$(SRC_DIR)/Functions.cpp \
-	$(SRC_DIR)/main.cpp \
-	$(SRC_DIR)/Person.cpp 
+	$(SRC_DIR)/main.cpp 
 
 OBJS = $(SRCS:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 DEPS = $(SRCS:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.d)
