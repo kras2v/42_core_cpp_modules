@@ -18,7 +18,8 @@ class MutantStack
 
 		const CustomList<T> &getList() const;
 
-		void		empty();
+		void		empty() const;
+		bool		clear();
 		size_t		size() const;
 		T&			top() const;
 		void		pop();

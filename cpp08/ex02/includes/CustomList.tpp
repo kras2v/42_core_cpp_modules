@@ -14,7 +14,7 @@ CustomList<T>::~CustomList()
 	#ifdef DEBUG
 		std::cout << "CustomList destructor" << std::endl;
 	#endif
-	this->empty();
+	this->clear();
 }
 
 template <typename T>
@@ -34,7 +34,7 @@ CustomList<T>& CustomList<T>::operator=(const CustomList<T> &other)
 	#endif
 	if (this != &other)
 	{
-		empty();
+		clear();
 		this->copy(other);
 	}
 	return *this;
@@ -154,7 +154,7 @@ void CustomList<T>::addFront(Node <T> &newNode)
 }
 
 template <typename T>
-void CustomList<T>::empty()
+void CustomList<T>::clear()
 {
 	Node<T> *current = this->_head;
 	while (current != nullptr)
@@ -163,6 +163,7 @@ void CustomList<T>::empty()
 		delete current;
 		current = next;
 	}
+	this->_head = nullptr;
 }
 
 template <typename T>

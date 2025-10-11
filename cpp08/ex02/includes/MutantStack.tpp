@@ -39,9 +39,15 @@ MutantStack<T> & MutantStack<T>::operator=(const MutantStack &other)
 }
 
 template <typename T>
-void MutantStack<T>::empty()
+void MutantStack<T>::clear()
 {
 	this->_elements.empty();
+}
+
+template <typename T>
+bool MutantStack<T>::empty() const
+{
+	return this->_elements.getSize() == 0;
 }
 
 template <typename T>

@@ -22,7 +22,7 @@ class CustomList
 		void 		addBack(const T &content);
 		void 		addFront(Node <T> &newNode);
 		void		addFront(const T &content);
-		void 		empty();
+		void 		clear();
 		void		removeFront();
 		void		removeBack();
 		size_t		getSize() const;
