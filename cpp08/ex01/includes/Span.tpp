@@ -1,6 +1,6 @@
 #include "Span.hpp"
 
-template <class iter>
+template <typename iter>
 Span::Span(iter first, iter last)
 {
 	#ifdef DEBUG
@@ -14,7 +14,7 @@ Span::Span(iter first, iter last)
 	}
 }
 
-template <class iter>
+template <typename iter>
 void Span::addNumber(iter begin, iter end)
 {
 	if (this->_elements.size() + 1 > this->_N)

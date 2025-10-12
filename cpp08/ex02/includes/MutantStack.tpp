@@ -53,35 +53,35 @@ bool MutantStack<T>::empty() const
 template <typename T>
 size_t		MutantStack<T>::size() const
 {
-	return this->_elements.getSize();
+	return this->_elements.size();
 }
 
 template <typename T>
-T	&MutantStack<T>::top() const
+T	MutantStack<T>::top() const
 {
-	return this->_elements.getHead()->getContent();
+	return this->_elements.front();
 }
 
 template <typename T>
 void MutantStack<T>::pop()
 {
-	this->_elements.removeFront();
+	this->_elements.pop_front();
 }
 
 template <typename T>
 void MutantStack<T>::push(const T &element)
 {
-	this->_elements.addFront(element);
+	this->_elements.push_front(element);
 }
 
 template <typename T>
-const CustomList<T> &MutantStack<T>::getList() const
+const std::deque<T> &MutantStack<T>::getList() const
 {
 	return this->_elements;
 }
 
 template <typename T>
-MutantStack<T>::iterator::iterator(Node<T>* node)
+MutantStack<T>::iterator::iterator(T* node)
 {
 	this->pointer = node;
 	#ifdef DEBUG
@@ -92,7 +92,7 @@ MutantStack<T>::iterator::iterator(Node<T>* node)
 template <typename T>
 const T & MutantStack<T>::iterator::operator*() const
 {
-	return this->pointer->getContent();
+	return *this->pointer;
 }
 
 template <typename T>
@@ -110,27 +110,56 @@ bool MutantStack<T>::iterator::operator!=(const MutantStack<T>::iterator &other)
 template <typename T>
 T &MutantStack<T>::iterator::operator++()
 {
-	this->pointer = this->pointer->getNextNode();
-	return this->pointer->getContent();
+	this->pointer++;
+	return *this->pointer;
 }
 
 template <typename T>
 T &MutantStack<T>::iterator::operator--()
 {
-	this->pointer = this->pointer->getPrevNode();
-	return this->pointer->getContent();
+	this->pointer--;
+	return *this->pointer;
 }
 
 template <typename T>
 typename MutantStack<T>::iterator MutantStack<T>::begin()
 {
-	return MutantStack<T>::iterator(this->_elements.getHead());
+	return MutantStack<T>::iterator(&this->_elements.front());
 }
 
 template <typename T>
 typename MutantStack<T>::iterator MutantStack<T>::end()
 {
-	MutantStack<T>::iterator end = MutantStack<T>::iterator(this->_elements.getLastNode()->getNextNode());
+	MutantStack<T>::iterator end = MutantStack<T>::iterator(&this->_elements.back() + 1);
 	return end;
 }
 
+template <typename T>
+MutantStack<T>::iterator::iterator(const iterator &other)
+{
+	this->pointer = other.pointer;
+	#ifdef DEBUG
+		std::cout << "iterator copy constructor" << std::endl;
+	#endif
+}
+
+template <typename T>
+typename MutantStack<T>::iterator & MutantStack<T>::iterator::operator=(const iterator &other)
+{
+	#ifdef DEBUG
+		std::cout << "iterator assignment operator" << std::endl;
+	#endif
+	if (this != &other)
+	{
+		this->pointer = other.pointer;
+	}
+	return *this;
+}
+
+template <typename T>
+MutantStack<T>::iterator::~iterator()
+{
+	#ifdef DEBUG
+		std::cout << "iterator destructor" << std::endl;
+	#endif
+}

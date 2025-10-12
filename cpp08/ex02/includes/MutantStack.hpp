@@ -1,14 +1,13 @@
 #ifndef MUTANTSTACK_HPP
 # define MUTANTSTACK_HPP
 
-# include "CustomList.hpp"
-# include <stack>
+# include <deque>
 
 template <typename T>
 class MutantStack
 {
 	private:
-		CustomList<T> _elements;
+		std::deque<T> _elements;
 
 	public:
 		MutantStack();
@@ -16,27 +15,26 @@ class MutantStack
 		MutantStack & operator=(const MutantStack<T> &other);
 		~MutantStack();
 
-		const CustomList<T> &getList() const;
+		const std::deque<T> &getList() const;
 
-		void		empty() const;
-		bool		clear();
+		bool		empty() const;
+		void		clear();
 		size_t		size() const;
-		T&			top() const;
+		T			top() const;
 		void		pop();
 		void		push(const T &element);
 
-		//Iterators
 		class iterator
 		{
 			private:
-				Node<T> *pointer;
+				T *pointer;
 				iterator() = delete;
 
 			public:
-				iterator(Node<T>* node);
-				// iterator(const iterator<T> &other);
-				// iterator & operator=(const iterator<T> &other);
-				// ~iterator();
+				iterator(T* node);
+				iterator(const iterator &other);
+				iterator & operator=(const iterator &other);
+				~iterator();
 
 				const T & operator*() const;
 				bool operator==(const iterator & other) const;

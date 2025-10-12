@@ -29,10 +29,10 @@ class Span
 
 		Span(unsigned int N);
 
-		template <class iter>
+		template <typename iter>
 			Span(iter begin, iter end);
 
-		template <class iter>
+		template <typename iter>
 			void addNumber(iter begin, iter end);
 		void addNumber(int numb);
 
