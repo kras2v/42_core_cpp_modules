@@ -96,39 +96,6 @@ bool testArrayType(const std::string& typeName, T generator())
 	return !allMatch;
 }
 
-#ifdef DEBUG
-	template <typename T, typename U>
-	void testCrossTypeCopy(std::string type1, std::string type2)
-	{
-		std::cout << CYAN << "Testing Array<" << type1 << "> → Array<" << type2 << ">" << RESET << std::endl << std::endl;
-
-		Array<T> source(5);
-		for (size_t i = 0; i < 5; ++i)
-			source[i] = static_cast<T>(i * 10);
-
-		try
-		{
-			Array<U> copiedTarget(source);
-			Array<U> assignedTarget;
-			assignedTarget = source;
-
-			std::cout << std::endl;
-			for (size_t i = 0; i < 5; ++i) {
-				std::cout 
-						<< "source[" << i << "] = " << source[i]
-						<< " | copiedTarget[" << i << "] = " << copiedTarget[i]
-						<< " | assignedTarget[" << i << "] = " << assignedTarget[i] << '\n';
-			}
-		}
-
-		catch(const std::exception& e)
-		{
-			std::cerr << e.what() << '\n';
-		}
-		std::cout << "Finished cross-type copy test.\n\n";
-	}
-#endif
-
 int main()
 {
 	bool failed = false;
@@ -141,13 +108,6 @@ int main()
 		std::cerr << RED << "Some tests failed!" << RESET << std::endl;
 	else
 		std::cout << GREEN << "All tests passed!" << RESET << std::endl;
-
-	#ifdef DEBUG
-		std::cout << std::endl << CYAN << "Different types cast: " << RESET << std::endl << std::endl;
-		testCrossTypeCopy<int, float>("int", "float");
-		testCrossTypeCopy<int, double>("int", "double");
-		testCrossTypeCopy<float, int>("float", "int");
-	#endif
 
 	return failed ? 1 : 0;
 }

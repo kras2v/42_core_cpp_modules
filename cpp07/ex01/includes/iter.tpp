@@ -1,5 +1,5 @@
-#ifndef ITER_HPP
-# define ITER_HPP
+#ifndef ITER_TPP
+# define ITER_TPP
 
 # include <iostream>
 
@@ -21,4 +21,4 @@ void iter(const T *address, size_t lenght, void(*func)(const T &))
 	}
 }
 
-#endif /* ITER_HPP */
+#endif /* ITER_TPP */
