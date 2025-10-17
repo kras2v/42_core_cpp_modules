@@ -34,8 +34,7 @@ int main(int argc, char *argv[])
 	}
 
 	std::vector<int> vector_ints(argc - 1);
-	// const size_t N = const_cast<size_t>(static_cast<size_t>(argc));
-	// std::array<int, N> array_ints;
+	std::list<int> list_ints;
 
 	for (size_t i = 1; argv[i]; i++)
 	{
@@ -51,6 +50,7 @@ int main(int argc, char *argv[])
 				throw std::out_of_range("number cannot be negative");
 
 			vector_ints[i - 1] = numb;
+			list_ints.push_back(numb);
 		}
 		catch(const std::out_of_range& e)
 		{
@@ -78,11 +78,16 @@ int main(int argc, char *argv[])
 	PmergeMe sorter(vector_ints.size());
 
 	std::cout << "Before: " << vector_ints << std::endl;
-	u_time_duration duration = track_time(&PmergeMe::mergeIsertion, vector_ints);
+	u_time_duration durationVector = track_time(&PmergeMe::mergeIsertion, vector_ints);
 	std::cout << "After: " << vector_ints << std::endl;
 
-	showTimeReport(vector_ints.size(), "std::vector<int>", duration);
+	u_time_duration durationList = track_time(&PmergeMe::mergeIsertion, list_ints);
+
+	showTimeReport(vector_ints.size(), "std::vector<int>", durationVector);
 	std::cout << "is sorted: " << std::boolalpha << std::is_sorted(vector_ints.begin(), vector_ints.end()) << std::endl;
+
+	showTimeReport(list_ints.size(), "std::list<int>", durationList);
+	std::cout << "is sorted: " << std::boolalpha << std::is_sorted(list_ints.begin(), list_ints.end()) << std::endl;
 
 	return 0;
 }
