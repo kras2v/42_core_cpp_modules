@@ -2,14 +2,25 @@
 
 std::vector<int> PmergeMe::jacobsthalNumbers;
 
+std::ostream & operator<<(std::ostream &ofs, std::vector<int> &ints)
+{
+	for (size_t i = 0; i < 5 && i < ints.size(); i++)
+	{
+		ofs << ints[i] << " ";
+	}
+	if (ints.size() > 5)
+		ofs << "[...]";
+	return ofs;
+}
+
 PmergeMe::PmergeMe(size_t size)
 {
 	#ifdef DEBUG
 		std::cout << "PmergeMe: Parametrized constructor called" << std::endl;
 	#endif
 
-	uint jacobsthalN = jacobsthal(0);
-	for (size_t i = 1; jacobsthalN < size; i++)
+	uint jacobsthalN = jacobsthal(1);
+	for (size_t i = 2; jacobsthalN < size; i++)
 	{
 		jacobsthalNumbers.push_back(jacobsthalN);
 		jacobsthalN = jacobsthal(i);
@@ -31,7 +42,6 @@ PmergeMe::PmergeMe(const PmergeMe& other)
 		std::cout << "PmergeMe: Copy constructor called" << std::endl;
 	#endif
 	(void)other;
-	// Copy fields if needed
 }
 
 PmergeMe& PmergeMe::operator=(const PmergeMe& other)
@@ -41,7 +51,7 @@ PmergeMe& PmergeMe::operator=(const PmergeMe& other)
 	#endif
 	if (this != &other)
 	{
-		// Copy fields if needed
+
 	}
 	return *this;
 }
@@ -95,8 +105,32 @@ void PmergeMe::mergeIsertion(std::vector<int> &ints)
 
 	mergeIsertion(winners);
 	ints.assign(winners.begin(), winners.end());
-	for (size_t i = 0; i < losers.size(); i++)
+
+	if (losers.size() == 1)
 	{
-		ints.insert(lower_bound(ints, losers[i]), losers[i]);
+		ints.insert(ints.begin(), losers[0]);
+		return ;
+	}
+	std::vector<int>::iterator first = jacobsthalNumbers.begin();
+	std::vector<int>::iterator last = std::upper_bound(jacobsthalNumbers.begin(),
+		jacobsthalNumbers.end(), static_cast<int>(losers.size()));
+
+	int amountOfGroups = last - first;
+	ints.insert(lower_bound(ints, losers[1]), losers[1]);
+	ints.insert(lower_bound(ints, losers[0]), losers[0]);
+
+	for (int i = 0; i < amountOfGroups; i++)
+	{
+		first++;
+		last = first + 1;
+		size_t firstIndex = *first;
+		size_t lastIndex = *last;
+
+		if (lastIndex >= losers.size()) lastIndex = losers.size() - 1;
+		while (lastIndex > firstIndex)
+		{
+			ints.insert(lower_bound(ints, losers[lastIndex]), losers[lastIndex]);
+			lastIndex--;
+		}
 	}
 }

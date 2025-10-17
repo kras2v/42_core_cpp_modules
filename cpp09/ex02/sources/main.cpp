@@ -4,17 +4,6 @@
 
 #include "PmergeMe.hpp"
 
-std::ostream & operator<<(std::ostream &ofs, std::vector<int> &ints)
-{
-	for (size_t i = 0; i < 5; i++)
-	{
-		ofs << ints[i] << " ";
-	}
-	if (ints.size() > 5)
-		ofs << "[...]";
-	return ofs;
-}
-
 using u_time_point = std::chrono::_V2::system_clock::time_point;
 using u_time_duration = std::chrono::microseconds;
 
@@ -45,7 +34,6 @@ int main(int argc, char *argv[])
 	}
 
 	std::vector<int> vector_ints(argc - 1);
-
 	// const size_t N = const_cast<size_t>(static_cast<size_t>(argc));
 	// std::array<int, N> array_ints;
 
@@ -95,5 +83,6 @@ int main(int argc, char *argv[])
 
 	showTimeReport(vector_ints.size(), "std::vector<int>", duration);
 	std::cout << "is sorted: " << std::boolalpha << std::is_sorted(vector_ints.begin(), vector_ints.end()) << std::endl;
+
 	return 0;
 }

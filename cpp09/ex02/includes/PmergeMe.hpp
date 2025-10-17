@@ -2,6 +2,7 @@
 # define PMERGEME_HPP
 
 # include <iostream>
+# include <algorithm>
 # include <vector>
 # include <array>
 # include <cmath>
@@ -24,5 +25,7 @@ class PmergeMe
 
 		static void mergeIsertion(std::vector<int> &ints);
 };
+
+std::ostream & operator<<(std::ostream &ofs, std::vector<int> &ints);
 
 #endif /* PMERGEME_HPP */
