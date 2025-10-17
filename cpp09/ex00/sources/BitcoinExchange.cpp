@@ -1,11 +1,13 @@
 #include "BitcoinExchange.hpp"
 
-BitcoinExchange::BitcoinExchange(std::string fileName) : _fileName(fileName)
+BitcoinExchange::BitcoinExchange(std::string fileName)
+	: _fileName(fileName)
 {
 	#ifdef DEBUG
 		std::cout << "BitcoinExchange parameterized constructor called with fileName: " << fileName << std::endl;
 	#endif
 	this->validateFileName();
+	this->getData();
 }
 
 BitcoinExchange::~BitcoinExchange()
@@ -15,7 +17,8 @@ BitcoinExchange::~BitcoinExchange()
 	#endif
 }
 
-BitcoinExchange::BitcoinExchange(const BitcoinExchange &other) : _fileName(other._fileName)
+BitcoinExchange::BitcoinExchange(const BitcoinExchange &other)
+	: _fileName(other._fileName), records(other.records)
 {
 	#ifdef DEBUG
 		std::cout << "BitcoinExchange copy constructor called" << std::endl;
@@ -30,6 +33,8 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &other)
 	if (this != &other)
 	{
 		this->_fileName = other._fileName;
+		this->records.clear();
+		this->records = other.records;
 	}
 	return *this;
 }
@@ -66,19 +71,17 @@ void BitcoinExchange::checkValue(float value)
 		throw FileException("Error: too large a number.");
 }
 
-std::vector<BitcoinExchange::Record>::iterator BitcoinExchange::findClosestDateInDB(Record &currentRecord)
+std::map<BitcoinExchange::Date, float>::iterator BitcoinExchange::findClosestDateInDB(Date &currentRecord)
 {
-	std::vector<Record>::iterator it = std::lower_bound(
-		this->records.begin(), this->records.end(),
-		currentRecord,
-		[](const Record &record1, const Record &record2) {
-		return record1._date <= record2._date;
-	});
-	if (it != this->records.begin()) {
+	std::map<Date, float>::iterator it = this->records.lower_bound(currentRecord);
+
+	if (currentRecord._date == it->first._date)
+		return it;
+	else if (it != this->records.begin())
 		--it;
-	}
-	if (it == this->records.begin() && currentRecord._date < it->_date)
+	else if (it == this->records.begin() && currentRecord._date < it->first._date)
 		throw FileException("Error: bad input (date before first record) => " + currentRecord._dateStr);
+
 	return it;
 }
 
@@ -89,6 +92,9 @@ void BitcoinExchange::readFile()
 		throw FileException("Error: Could not open file: " + _fileName);
 
 	std::string line;
+
+	if (this->records.size() == 0)
+		throw FileException("Error: Could not open database.");
 
 	std::getline(ifs, line);
 	if (line.compare("date | value"))
@@ -101,19 +107,18 @@ void BitcoinExchange::readFile()
 			if (line.length() < 10)
 				throw FileException("Error: bad input => " + line);
 
-			Record currentRecord;
-			currentRecord._dateStr = line.substr(0, 10);
-			currentRecord._date = parseDate(currentRecord._dateStr, "Error: bad input => " + currentRecord._dateStr);
+			Date newDate;
+			newDate._dateStr = line.substr(0, 10);
+			newDate._date = parseDate(newDate._dateStr, "Error: bad input => " + line);
 
-			if (line.length() <= 13)
+			if (line.length() <= 13 || line.compare(10, 3, " | "))
 				throw FileException("Error: bad input => " + line.substr(0));
 
-			currentRecord._value = parseValue(line.substr(13), "Error: bad input => " + line.substr(13));
-			checkValue(currentRecord._value);
+			float newValue = parseValue(line.substr(13), "Error: bad input => " + line.substr(13));
+			checkValue(newValue);
 
-			std::vector<Record>::iterator it = findClosestDateInDB(currentRecord);
-			Record searchRecord = *it;
-			std::cout << currentRecord._dateStr << " => " << currentRecord._value << " = " << searchRecord._value * currentRecord._value << std::endl;
+			std::map<Date, float>::iterator it = findClosestDateInDB(newDate);
+			std::cout << newDate._dateStr << " => " << newValue << " = " << it->second * newValue << std::endl;
 		}
 		catch(const std::exception& e)
 		{
@@ -160,7 +165,7 @@ void BitcoinExchange::getData()
 	std::ifstream ifs(databaseName);
 
 	if (!ifs.is_open())
-		throw FileException("Error: Could not open file: " + _fileName);
+		throw FileException("Error: Could not open database.");
 
 	std::string line;
 	std::getline(ifs, line);
@@ -168,22 +173,22 @@ void BitcoinExchange::getData()
 	{
 		if (line.length() >= 10)
 		{
-			Record newRecord;
-			newRecord._dateStr = line.substr(0, 10);
-			newRecord._date = parseDate(newRecord._dateStr, "Error: database date format is invalid.");
+			Date newDate;
+			newDate._dateStr = line.substr(0, 10);
+			newDate._date = parseDate(newDate._dateStr, "Error: database date format is invalid.");
 			if (line.length() >= 11)
 			{
-				newRecord._value = parseValue(line.substr(11), "Error: database value format is invalid.");
-				this->records.push_back(newRecord);
+				float newValue = parseValue(line.substr(11), "Error: database value format is invalid.");
+				this->records[newDate] = newValue;
 			}
 			else
 			{
-				throw FileException("Error: database format is invalid.");
+				throw FileException("Error: database value format is invalid.");
 			}
 		}
 		else
 		{
-			throw FileException("Error: database format is invalid.");
+			throw FileException("Error: database date format is invalid.");
 		}
 	}
 	ifs.close();

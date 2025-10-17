@@ -12,10 +12,6 @@ int main(int argc, char *argv[])
 	try
 	{
 		BitcoinExchange exchange(argv[1]);
-		exchange.validateFileName();
-		std::cout << "File validation successful!" << std::endl;
-
-		exchange.getData();
 		exchange.readFile();
 	}
 	catch (const BitcoinExchange::FileException& e)

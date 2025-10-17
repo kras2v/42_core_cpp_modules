@@ -1,0 +1,39 @@
+# Invalid RPN Test Cases (Numbers >= 10 or < 0)
+
+## Multi-digit Numbers (>= 10)
+"10 5 +"       # Error - 10 is not a single digit
+"25 30 +"      # Error - both numbers > 9
+"12 3 +"       # Error - 12 is not a single digit
+"5 11 -"       # Error - 11 is not a single digit
+"100 1 +"      # Error - 100 is not a single digit
+"15 3 /"       # Error - 15 is not a single digit
+"20 4 *"       # Error - 20 is not a single digit
+
+## Negative Numbers (< 0)
+"-1 2 +"       # Error - negative numbers not allowed
+"-5 3 *"       # Error - negative numbers not allowed
+"5 -2 +"       # Error - negative numbers not allowed
+"-9 -1 +"      # Error - negative numbers not allowed
+
+## Decimal Numbers
+"1.5 2 +"      # Error - only integers allowed
+"5.0 3 +"      # Error - only integers allowed
+"0.5 1 +"      # Error - only integers allowed
+"3.14 2 *"     # Error - only integers allowed
+
+## Structural Errors (Not Related to Single Digit Rule)
+"5"            # Error - missing operator
+"5 +"          # Error - missing operand
+"+"            # Error - only operator
+"1 2 3 +"      # Error - too many operands
+"1 + +"        # Error - too many operators
+""             # Error - empty expression
+"1 2 a +"      # Error - invalid character
+"12+"          # Error - no spaces
+"+ 1 2"        # Error - wrong order
+
+## Mixed Valid/Invalid (Single Digit Rule Violations)
+"5 10 +"       # Error - 10 violates rule
+"12 3 +"       # Error - 12 violates rule
+"9 -1 +"       # Error - -1 violates rule
+"0 15 *"       # Error - 15 violates rule

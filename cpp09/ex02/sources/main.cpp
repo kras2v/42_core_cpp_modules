@@ -1,0 +1,99 @@
+#include <iostream>
+#include <algorithm>
+#include <chrono>
+
+#include "PmergeMe.hpp"
+
+std::ostream & operator<<(std::ostream &ofs, std::vector<int> &ints)
+{
+	for (size_t i = 0; i < 5; i++)
+	{
+		ofs << ints[i] << " ";
+	}
+	if (ints.size() > 5)
+		ofs << "[...]";
+	return ofs;
+}
+
+using u_time_point = std::chrono::_V2::system_clock::time_point;
+using u_time_duration = std::chrono::microseconds;
+
+// void merge(std::vector<int> &ints)
+template <template <typename...> class Container, typename T>
+u_time_duration track_time( void(*func)(Container<T>&), Container<T>& container)
+{
+	u_time_point start = std::chrono::high_resolution_clock::now();
+	func(container);
+	u_time_point end = std::chrono::high_resolution_clock::now();
+
+	u_time_duration duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+	return duration;
+}
+
+void showTimeReport(size_t size, std::string type, u_time_duration duration)
+{
+	std::cout << "Time to process a range of " << size << " elements "
+	<< "with "<< type << " : "
+	<< duration.count() <<" us" << std::endl;
+}
+
+int main(int argc, char *argv[])
+{
+	if (argc == 1) {
+		std::cerr << "Error: Expected a single argument (sequence of positive integers)." << std::endl;
+		return 1;
+	}
+
+	std::vector<int> vector_ints(argc - 1);
+
+	// const size_t N = const_cast<size_t>(static_cast<size_t>(argc));
+	// std::array<int, N> array_ints;
+
+	for (size_t i = 1; argv[i]; i++)
+	{
+		try
+		{
+			size_t pos;
+			int numb = std::stoi(argv[i], &pos);
+
+			if (argv[i][pos] != '\0')
+				throw std::invalid_argument("not a number");
+
+			if (numb < 0)
+				throw std::out_of_range("number cannot be negative");
+
+			vector_ints[i - 1] = numb;
+		}
+		catch(const std::out_of_range& e)
+		{
+			if (std::string(e.what()).compare("stoi") == 0)
+				std::cerr << "Error: " << "number is out of range" << " => " << argv[i] << '\n';
+			else
+				std::cerr << "Error: " << e.what() << " => " << argv[i] << '\n';
+			return 1;
+		}
+		catch (const std::invalid_argument& e)
+		{
+			if (std::string(e.what()).compare("stoi") == 0)
+				std::cerr << "Error: " << "not a number." << " => " << argv[i] << '\n';
+			else
+				std::cerr << "Error: " << e.what() << " => " << argv[i] << '\n';
+			return 1;
+		}
+		catch(const std::exception& e)
+		{
+			std::cerr << e.what() << argv[i] << '\n';
+			return 1;
+		}
+	}
+
+	PmergeMe sorter(vector_ints.size());
+
+	std::cout << "Before: " << vector_ints << std::endl;
+	u_time_duration duration = track_time(&PmergeMe::mergeIsertion, vector_ints);
+	std::cout << "After: " << vector_ints << std::endl;
+
+	showTimeReport(vector_ints.size(), "std::vector<int>", duration);
+	std::cout << "is sorted: " << std::boolalpha << std::is_sorted(vector_ints.begin(), vector_ints.end()) << std::endl;
+	return 0;
+}

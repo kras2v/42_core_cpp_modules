@@ -1,7 +1,7 @@
 NAME = btc
 
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -g -MMD -MP -std=c++17 -Iincludes
+CXXFLAGS = -Wall -Wextra -Werror -MMD -MP -std=c++17 -Iincludes
 
 SRC_DIR = sources
 OBJ_DIR = objects

@@ -3,27 +3,29 @@
 
 # include <iostream>
 # include <fstream>
-# include <list>
+# include <map>
 # include <iomanip>
 # include <ctime>
 # include <algorithm>
 
 class BitcoinExchange
 {
-	struct s_record
+	struct Date
 	{
 		time_t _date;
 		std::string _dateStr;
-		float _value;
+
+		bool operator<(const Date &other) const {
+			return _date < other._date;
+		}
 	};
-	using Record = struct s_record;
 
 	private:
 		std::string _fileName;
-		std::vector<Record> records;
+		std::map<Date, float> records;
 
 		void checkValue(float value);
-		std::vector<Record>::iterator findClosestDateInDB(Record &currentRecord);
+		std::map<Date, float>::iterator findClosestDateInDB(Date &currentRecord);
 
 	public:
 		BitcoinExchange() = delete;
