@@ -1,12 +1,26 @@
 #include "PmergeMe.hpp"
 
-std::vector<int> PmergeMe::jacobsthalNumbers;
+std::vector<size_t> PmergeMe::jacobsthalNumbers;
 
 std::ostream & operator<<(std::ostream &ofs, std::vector<int> &ints)
 {
 	for (size_t i = 0; i < 5 && i < ints.size(); i++)
 	{
 		ofs << ints[i] << " ";
+	}
+	if (ints.size() > 5)
+		ofs << "[...]";
+	return ofs;
+}
+
+std::ostream & operator<<(std::ostream &ofs, std::list<int> &ints)
+{
+	std::list<int>::iterator begin = ints.begin();
+	std::list<int>::iterator end = ints.end();
+
+	for (size_t i = 0; i < 5 && begin != end; i++, begin++)
+	{
+		ofs << *begin << " ";
 	}
 	if (ints.size() > 5)
 		ofs << "[...]";
@@ -22,10 +36,8 @@ PmergeMe::PmergeMe(size_t size)
 	uint jacobsthalN = jacobsthal(1);
 	for (size_t i = 2; jacobsthalN < size; i++)
 	{
-		jacobsthalNumbers.push_back(jacobsthalN);
 		jacobsthalN = jacobsthal(i);
-
-		if (jacobsthalN > size) break;
+		jacobsthalNumbers.push_back(jacobsthalN);
 	}
 }
 
@@ -111,26 +123,28 @@ void PmergeMe::mergeIsertion(std::vector<int> &ints)
 		ints.insert(ints.begin(), losers[0]);
 		return ;
 	}
-	std::vector<int>::iterator first = jacobsthalNumbers.begin();
-	std::vector<int>::iterator last = std::upper_bound(jacobsthalNumbers.begin(),
-		jacobsthalNumbers.end(), static_cast<int>(losers.size()));
+	std::vector<size_t>::iterator first = jacobsthalNumbers.begin();
+	std::vector<size_t>::iterator last = std::upper_bound(jacobsthalNumbers.begin(),
+		jacobsthalNumbers.end(), losers.size());
 
-	int amountOfGroups = last - first;
-	ints.insert(lower_bound(ints, losers[1]), losers[1]);
-	ints.insert(lower_bound(ints, losers[0]), losers[0]);
-
-	for (int i = 0; i < amountOfGroups; i++)
+	size_t amountOfGroups = last - first;
+	for (size_t i = 0; i < amountOfGroups; i++)
 	{
-		first++;
 		last = first + 1;
-		size_t firstIndex = *first;
-		size_t lastIndex = *last;
+		size_t firstIndex = *first - 1;
+		size_t lastIndex = *last - 1;
 
-		if (lastIndex >= losers.size()) lastIndex = losers.size() - 1;
-		while (lastIndex > firstIndex)
+		if (lastIndex >= losers.size()) lastIndex = losers.size();
+		size_t groupSize = lastIndex - firstIndex;
+		lastIndex--;
+
+		while (groupSize > 0)
 		{
 			ints.insert(lower_bound(ints, losers[lastIndex]), losers[lastIndex]);
+			if (groupSize == 0 || lastIndex == 0) break;
 			lastIndex--;
+			groupSize--;
 		}
+		first++;
 	}
 }
