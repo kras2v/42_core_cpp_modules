@@ -84,10 +84,11 @@ int main(int argc, char *argv[])
 	u_time_duration durationList = track_time(&PmergeMe::mergeIsertion, list_ints);
 
 	showTimeReport(vector_ints.size(), "std::vector<int>", durationVector);
-	std::cout << "is sorted: " << std::boolalpha << std::is_sorted(vector_ints.begin(), vector_ints.end()) << std::endl;
-
 	showTimeReport(list_ints.size(), "std::list<int>", durationList);
-	std::cout << "is sorted: " << std::boolalpha << std::is_sorted(list_ints.begin(), list_ints.end()) << std::endl;
 
+	#ifdef DEBUG
+		std::cout << "is vector sorted: " << std::boolalpha << std::is_sorted(vector_ints.begin(), vector_ints.end()) << std::endl;
+		std::cout << "is list sorted: " << std::boolalpha << std::is_sorted(list_ints.begin(), list_ints.end()) << std::endl;
+	#endif
 	return 0;
 }

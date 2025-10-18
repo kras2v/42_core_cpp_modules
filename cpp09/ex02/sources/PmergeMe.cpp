@@ -68,12 +68,23 @@ PmergeMe& PmergeMe::operator=(const PmergeMe& other)
 	return *this;
 }
 
-std::vector<int>::iterator PmergeMe::lower_bound(std::vector<int> &ints, int numb)
+uint PmergeMe::jacobsthal(int n)
+{
+	if (n == 0)
+		return 0;
+	if (n == 1)
+		return 1;
+	return jacobsthal(n - 1) + 2 * jacobsthal(n - 2);
+}
+
+using vectorIntIter = std::vector<int>::iterator;
+
+vectorIntIter PmergeMe::lower_bound(std::vector<int> &ints, int numb)
 {
 	size_t left = 0, right = ints.size(), mid = left + (right - left) / 2;
 	while (left != right)
 	{
-		if (numb > ints[mid])
+		if (numb > *std::next(ints.begin(), mid))
 		{
 			left = mid + 1;
 		}
@@ -83,16 +94,7 @@ std::vector<int>::iterator PmergeMe::lower_bound(std::vector<int> &ints, int num
 		}
 		mid = left + (right - left) / 2;
 	}
-	return ints.begin() + mid;
-}
-
-uint PmergeMe::jacobsthal(int n)
-{
-	if (n == 0)
-		return 0;
-	if (n == 1)
-		return 1;
-	return jacobsthal(n - 1) + 2 * jacobsthal(n - 2);
+	return std::next(ints.begin(), mid);
 }
 
 void PmergeMe::changeOrder(std::vector<int> &losers)
@@ -115,7 +117,7 @@ void PmergeMe::changeOrder(std::vector<int> &losers)
 		for (size_t groupSize = lastIndex - firstIndex; groupSize > 0; groupSize--)
 		{
 			lastIndex--;
-			losersOrdered.push_back(losers[lastIndex]);
+			losersOrdered.push_back(*std::next(losers.begin(), lastIndex));
 			if (groupSize == 0 || lastIndex == 0) break;
 		}
 		first++;
@@ -127,19 +129,23 @@ void PmergeMe::mergeIsertion(std::vector<int> &ints)
 {
 	if (ints.size() == 1) return;
 
-	std::vector<int> winners(ints.size() / 2);
-	std::vector<int> losers(std::ceil(static_cast<double>(ints.size()) / 2));
+	std::vector<int> winners;
+	std::vector<int> losers;
 
-	for (size_t i = 0, j = 0; i < ints.size(); i += 2, j++)
+	vectorIntIter intsEnd = ints.end();
+	for (vectorIntIter intsBegin = ints.begin(); intsBegin != intsEnd;)
 	{
-		if ((i + 1) < ints.size())
+		if (std::next(intsBegin) != intsEnd)
 		{
-			losers[j] = std::min(ints[i], ints[i + 1]);
-			winners[j] = std::max(ints[i], ints[i + 1]);
+			losers.push_back(std::min(*intsBegin, *std::next(intsBegin)));
+			winners.push_back(std::max(*intsBegin, *std::next(intsBegin)));
+			intsBegin++;
+			intsBegin++;
 		}
 		else
 		{
-			losers[j] = ints[i];
+			losers.push_back(*intsBegin);
+			intsBegin++;
 		}
 	}
 
@@ -148,14 +154,15 @@ void PmergeMe::mergeIsertion(std::vector<int> &ints)
 
 	if (losers.size() == 1)
 	{
-		ints.insert(ints.begin(), losers[0]);
+		ints.insert(ints.begin(), losers.front());
 		return ;
 	}
 
 	changeOrder(losers);
-	for (size_t i = 0; i < losers.size(); i++)
+	for (vectorIntIter losersIter = losers.begin(); losersIter != losers.end(); )
 	{
-		ints.insert(lower_bound(ints, losers[i]), losers[i]);
+		ints.insert(lower_bound(ints, *losersIter), *losersIter);
+		losersIter++;
 	}
 }
 
