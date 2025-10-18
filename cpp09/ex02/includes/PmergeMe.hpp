@@ -8,25 +8,26 @@
 # include <list>
 # include <cmath>
 
-
 class PmergeMe
 {
 	private:
 		PmergeMe();
+		PmergeMe(const PmergeMe& other) = delete;
+		PmergeMe& operator=(const PmergeMe& other) = delete;
+
 		static std::vector<size_t> jacobsthalNumbers;
-		uint jacobsthal(int n);
+		void 					   assignJacobsthal(size_t size);
+		uint 					   jacobsthal(int n);
 
 		static std::vector<int>::iterator lower_bound(std::vector<int> &ints, int numb);
-		static void changeOrder(std::vector<int> &losers);
+		static void					   changeOrder(std::vector<int> &losers);
 
-		static void changeOrder(std::list<int> &losers);
-		static std::list<int>::iterator lower_bound(std::list<int> &ints, int numb);
+		static std::list<int>::iterator   lower_bound(std::list<int> &ints, int numb);
+		static void					   changeOrder(std::list<int> &losers);
 
 	public:
 		PmergeMe(size_t size);
 		~PmergeMe();
-		PmergeMe(const PmergeMe& other);
-		PmergeMe& operator=(const PmergeMe& other);
 
 		static void mergeIsertion(std::vector<int> &ints);
 		static void mergeIsertion(std::list<int> &ints);
