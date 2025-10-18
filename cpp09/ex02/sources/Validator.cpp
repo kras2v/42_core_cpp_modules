@@ -1,34 +1,5 @@
 #include "Validator.hpp"
 
-Validator::Validator() {
-	#ifdef DEBUG
-		std::cout << "Validator: Default constructor called" << std::endl;
-	#endif
-}
-
-Validator::Validator(const Validator& other) {
-	#ifdef DEBUG
-		std::cout << "Validator: Copy constructor called" << std::endl;
-	#endif
-	(void)other;
-}
-
-Validator& Validator::operator=(const Validator& rhs) {
-	#ifdef DEBUG
-		std::cout << "Validator: Copy assignment operator called" << std::endl;
-	#endif
-	if (this != &rhs) {
-		// copy members if/when added
-	}
-	return *this;
-}
-
-Validator::~Validator() {
-	#ifdef DEBUG
-		std::cout << "Validator: Destructor called" << std::endl;
-	#endif
-}
-
 bool Validator::validateInput(char *argv[], std::vector<int> &vect_ints, std::list<int> &list_ints)
 {
 	for (size_t i = 1; argv[i]; i++)

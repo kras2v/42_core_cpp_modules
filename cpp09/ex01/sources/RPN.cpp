@@ -11,20 +11,22 @@ bool RPN::issign(char c)
 		);
 }
 
-bool RPN::isEmpty(std::string &expression)
+void RPN::isEmpty(std::string &expression)
 {
-	return expression.empty();
+	if (expression.empty())
+		throw RPN::RPNException("expression is empty");
 }
 
-bool RPN::hasLeadingTrailingSpaces(std::string &expression)
+void RPN::hasLeadingTrailingSpaces(std::string &expression)
 {
-	return isspace(expression.front())
-	|| isspace(expression.back());
+	if (isspace(expression.front()) || isspace(expression.back()))
+		throw RPN::RPNException("has trailing or leading spaces");
 }
 
-bool RPN::isTooShort(std::string &expression)
+void RPN::isTooShort(std::string &expression)
 {
-	return expression.length() < minLenght;
+	if (expression.length() < minLenght)
+		throw RPN::RPNException("expression is too short");
 }
 
 void RPN::checkNumber(std::string &expression, std::stack<int> &stack)
@@ -42,9 +44,9 @@ int RPN::calculate(std::string &expression)
 {
 	std::stack<int> stack;
 
-	if (isEmpty(expression) || hasLeadingTrailingSpaces(expression)
-		|| isTooShort(expression))
-		throw std::runtime_error("Error");
+	isEmpty(expression);
+	hasLeadingTrailingSpaces(expression);
+	isTooShort(expression);
 
 	while (expression.front())
 	{
@@ -52,9 +54,8 @@ int RPN::calculate(std::string &expression)
 			checkNumber(expression, stack);
 		else
 		{
-			//!TODO: Create custom exceptions
 			if (stack.size() < 2)
-				throw std::runtime_error("Error");
+				throw RPN::RPNException("expression has a wrong format");
 
 			stack.push(expression.front());
 
@@ -83,7 +84,7 @@ int RPN::calculate(std::string &expression)
 
 				case '/':
 					if (first == 0)
-						throw std::runtime_error("Error");
+						throw RPN::RPNException("expression has a wrong format");
 					stack.push(second / first);
 					break;
 
@@ -95,11 +96,19 @@ int RPN::calculate(std::string &expression)
 		expression = expression.erase(0, 1);
 		if ((expression.begin() != expression.end())
 			&& !isspace(expression.front()))
-			throw std::runtime_error("Error");
+				throw RPN::RPNException("expression has a wrong format");
 		expression = expression.erase(0, 1);
 	}
 
 	if (stack.size() != 1)
-		throw std::runtime_error("Error");
+		throw RPN::RPNException("expression has a wrong format");
 	return stack.top();
+}
+
+RPN::RPNException::RPNException(const std::string& message)
+	: _message(message) {}
+
+const char* RPN::RPNException::what() const throw()
+{
+	return _message.c_str();
 }

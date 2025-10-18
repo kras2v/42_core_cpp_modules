@@ -8,10 +8,10 @@
 class Validator {
 
 	private:
-		Validator();
-		Validator(const Validator&);
-		Validator& operator=(const Validator&);
-		~Validator();
+		Validator() = delete;
+		Validator(const Validator& other) = delete;
+		Validator& operator=(const Validator& other) = delete;
+		~Validator() = delete;
 
 	public:
 		static bool validateInput(char *argv[], std::vector<int> &vect_ints, std::list<int> &list_ints);

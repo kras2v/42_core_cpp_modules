@@ -17,9 +17,9 @@ class RPN
 	private:
 		static const size_t minLenght;
 
-		static bool isEmpty(std::string &expression);
-		static bool hasLeadingTrailingSpaces(std::string &expression);
-		static bool isTooShort(std::string &expression);
+		static void isEmpty(std::string &expression);
+		static void hasLeadingTrailingSpaces(std::string &expression);
+		static void isTooShort(std::string &expression);
 		static void checkNumber(std::string &expression, std::stack<int> &stack);
 
 		static bool issign(char c);
@@ -31,6 +31,16 @@ class RPN
 
 	public:
 		static int calculate(std::string &expression);
+
+		class RPNException : public std::exception
+		{
+			private:
+				std::string _message;
+			
+			public:
+				RPNException(const std::string& message);
+				virtual const char* what() const throw();
+		};
 };
 
 #endif /* PRN_HPP */
