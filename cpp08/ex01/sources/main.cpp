@@ -9,7 +9,7 @@ int main() {
 
 	std::cout << "=== Test 1: Basic addNumber and capacity limit ===\n";
 	try {
-		Span sp(6);
+		Span sp(5);
 		sp.addNumber(6);
 		sp.addNumber(3);
 		sp.addNumber(17);
@@ -29,7 +29,6 @@ int main() {
 	std::cout << "\n=== Test 2: Exception with too few elements ===\n";
 	try {
 		Span sp(2);
-		sp.addNumber(10);
 		sp.shortestSpan(); // should throw
 	} catch (std::exception &e) {
 		std::cout << "Expected exception: " << e.what() << std::endl;
