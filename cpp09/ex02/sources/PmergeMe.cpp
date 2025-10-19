@@ -86,7 +86,7 @@ void PmergeMe::changeOrder(std::vector<int> &losers)
 
 void PmergeMe::mergeIsertion(std::vector<int> &ints)
 {
-	if (ints.size() == 1) return;
+	if (ints.size() < 2) return;
 
 	std::vector<int> winners(ints.size() / 2);
 	std::vector<int> losers(std::ceil(static_cast<double>(ints.size()) / 2));
