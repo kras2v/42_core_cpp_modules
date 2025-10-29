@@ -32,8 +32,8 @@ int main(int argc, char *argv[])
 	Timer::showTimeReport(list_ints.size(), "std::list<int>", durationList);
 
 	#ifdef DEBUG
-		std::cout << "is vector sorted: " << std::boolalpha << std::is_sorted(vector_ints.begin(), vector_ints.end()) << std::endl;
-		std::cout << "is list sorted: " << std::boolalpha << std::is_sorted(list_ints.begin(), list_ints.end()) << std::endl;
+		std::cout << vector_ints.size() << " is vector sorted: " << std::boolalpha << std::is_sorted(vector_ints.begin(), vector_ints.end()) << std::endl;
+		std::cout << list_ints.size() << " is list sorted: " << std::boolalpha << std::is_sorted(list_ints.begin(), list_ints.end()) << std::endl;
 	#endif
 	return 0;
 }

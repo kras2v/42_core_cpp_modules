@@ -8,6 +8,8 @@
 # include <list>
 # include <cmath>
 
+# define TWO_IN_POWER_OF(x) (1 << (x))
+
 class PmergeMe
 {
 	private:
@@ -36,7 +38,7 @@ class PmergeMe
 		static vectorIntIter lower_bound(std::vector<int> &ints, int numb);
 
 		using listIntIter = std::list<int>::iterator;
-		static listIntIter lower_bound(std::list<int> &ints, int numb, size_t elementsNum, bool isSameIndex);
+		static listIntIter lower_bound(std::list<int> &ints, int numb, size_t elementsNum, size_t totalGroupSize);
 
 	public:
 		PmergeMe(size_t size);

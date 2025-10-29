@@ -40,103 +40,45 @@ uint PmergeMe::jacobsthal(int n)
 }
 
 template <template <typename...> class Container, typename T>
-void PmergeMe::changeOrder(Container<T> &losers, size_t step)
+void PmergeMe::changeOrder(Container<T> &b, size_t elementsInGroup)
 {
-	size_t amountOfElements = step == 0 ? losers.size() : losers.size() / step;
+	size_t amountOfGroups = b.size() / elementsInGroup;
+	if (amountOfGroups == 1) return ;
 
-	std::vector<size_t>::iterator first = jacobsthalNumbers.begin();
-	std::vector<size_t>::iterator last = std::upper_bound(jacobsthalNumbers.begin(),
-		jacobsthalNumbers.end(), amountOfElements);
-
-	size_t amountOfGroups = last - first;
-	Container<T> losersOrdered;
-
-	// std::cout << "step: " << step << std::endl;
-	// std::cout << "losers.size(): " << losers.size() << std::endl;
-	// std::cout << "first: " << *first << std::endl;
-	// std::cout << "last: " << *last << std::endl;
-	// std::cout << "amountOfGroups: " << amountOfGroups << std::endl;
-
-	if (amountOfGroups == 0 || losers.size() < 2) return;
-	for (size_t i = 0; i < amountOfGroups; i++)
+	Container<T> bOrdered;
+	for (auto current = jacobsthalNumbers.begin(); amountOfGroups >= *current; current++)
 	{
-		last = first + 1;
-		size_t firstIndex = *first;
-		size_t lastIndex = *last;
+		//-1 because we convert jacobsthal sequence to indexes, and last -2 because it's excluded
+		auto next = current + 1;
+		size_t firstIndex = (*current > 0) ? *current - 1 : 0;
+		size_t lastIndex  = (*next  > 1) ? *next  - 2 : 0;
 
-		size_t groupSize = (lastIndex - firstIndex);
-		// std::cout << "groupSize: " << groupSize << std::endl;
+		size_t lastIndexInOriginalContainer = (lastIndex * elementsInGroup) + (elementsInGroup - 1);
+		size_t firstIndexInOriginalContainer = (firstIndex * elementsInGroup);
 
-		firstIndex = (firstIndex) < 2 ? 0 : firstIndex - 1;
-		lastIndex = (lastIndex) < 2 ? 0 : lastIndex - 2;
-		
-		// std::cout << "firstIndex: " << firstIndex << std::endl;
-		// std::cout << "lastIndex: " << lastIndex << std::endl;
+		if (lastIndexInOriginalContainer  >= b.size())
+			lastIndexInOriginalContainer = b.size() - 1;
 
-		size_t lastIndexInOriginalContainer =  (step != 0) ? (lastIndex * step) + (step - 1) : lastIndex;
-		size_t firstIndexInOriginalContainer = (step != 0) ? (firstIndex * step) : firstIndex;
-
-		if (lastIndexInOriginalContainer  >= losers.size())
+		while (lastIndexInOriginalContainer >= firstIndexInOriginalContainer)
 		{
-			lastIndexInOriginalContainer = losers.size() - 1;
-		}
+			bOrdered.insert(bOrdered.end(),
+				std::next(b.begin(), lastIndexInOriginalContainer + 1 - elementsInGroup),
+				std::next(b.begin(), lastIndexInOriginalContainer + 1)
+			);
 
-		// std::cout << "RANGE [" << firstIndexInOriginalContainer << " - " << lastIndexInOriginalContainer << "]"<< std::endl;
-
-		if (step == 0)
-		{
-			for (; groupSize > 0 && lastIndexInOriginalContainer >= firstIndexInOriginalContainer; groupSize--)
-			{
-				// std::cout << "Elem[" << lastIndexInOriginalContainer << "] = " << *std::next(losers.begin(), lastIndexInOriginalContainer) << std::endl;
-				losersOrdered.push_back(*std::next(losers.begin(), lastIndexInOriginalContainer));
-				lastIndexInOriginalContainer--;
-				if (groupSize == 0) break;
-			}
+			if (lastIndexInOriginalContainer < elementsInGroup)
+				break;
+			lastIndexInOriginalContainer -= elementsInGroup;
 		}
-
-		for (; groupSize > 0 && lastIndexInOriginalContainer > firstIndexInOriginalContainer; groupSize--)
-		{
-			size_t copyTill = lastIndexInOriginalContainer + 1;
-			for (size_t i = lastIndexInOriginalContainer - step + 1; i < copyTill; i++)
-			{
-				// std::cout << "Elem[" << i << "] = " << *std::next(losers.begin(), i) << std::endl;
-				losersOrdered.push_back(*std::next(losers.begin(), i));
-				lastIndexInOriginalContainer--;
-			}
-			if (groupSize == 0) break;
-		}
-		first++;
 	}
-	losers = losersOrdered;
-}
-
-
-using vectorIntIter = std::vector<int>::iterator;
-
-vectorIntIter PmergeMe::lower_bound(std::vector<int> &ints, int numb)
-{
-	size_t left = 0, right = ints.size(), mid = left + (right - left) / 2;
-	while (left != right)
-	{
-		if (numb > ints[mid])
-		{
-			left = mid + 1;
-		}
-		else
-		{
-			right = mid;
-		}
-		mid = left + (right - left) / 2;
-	}
-	return std::next(ints.begin(), mid);
+	b = bOrdered;
 }
 
 using listIntIter = std::list<int>::iterator;
-listIntIter PmergeMe::lower_bound(std::list<int> &ints, int numb, size_t elementsNum, bool isSameIndex)
+listIntIter PmergeMe::lower_bound(std::list<int> &ints, int numb, size_t elementsNum, size_t totalGroupSize)
 {
-	(void)isSameIndex;
-	size_t left = 0, right = ints.size() / elementsNum, mid = left + (right - left) / 2;
-	while (left != right)
+	size_t left = 0, right = totalGroupSize, mid = left + (right - left) / 2;
+	while (left < right)
 	{
 		if (numb > *std::next(ints.begin(), (mid * elementsNum) + (elementsNum - 1)))
 		{
@@ -149,109 +91,40 @@ listIntIter PmergeMe::lower_bound(std::list<int> &ints, int numb, size_t element
 		comparisons++;
 		mid = left + (right - left) / 2;
 	}
-	// std::cout << "MID => " <<  *std::next(ints.begin(), mid * elementsNum) << std::endl;
-	return std::next(ints.begin(), mid * elementsNum);
+	return std::next(ints.begin(), left * elementsNum);
 }
-
 
 using listIntIter = std::list<int>::iterator;
 
 template <template <typename...> class Container, typename T>
 void PmergeMe::insertion(Container<T> &a, Container<T> &b, size_t elementsNum)
 {
-	Container<T> tempA;
+	size_t groupLVL = 2;
+	size_t amountOfComparisons = std::min(static_cast<size_t>(TWO_IN_POWER_OF(groupLVL) - 1), a.size() / elementsNum);
 
-	std::vector<size_t>::iterator currentJacNumb = jacobsthalNumbers.begin();
-	std::vector<size_t>::iterator nextJacNumb = currentJacNumb + 1;
-
-	size_t groupSize = *nextJacNumb - *currentJacNumb + 1;
-	if (groupSize > a.size() * elementsNum)
-		groupSize = a.size() / elementsNum;
-
-	auto aBeginIter = a.begin();
-	// std::cout << "groupSize ==> " << groupSize << std::endl;
-	for (size_t i = 0; i < groupSize && aBeginIter != a.end(); i++)
+	size_t jacobianStepSize = 2;
+	for (auto currentJacNumb = jacobsthalNumbers.begin(); !b.empty(); --jacobianStepSize)
 	{
-		for (size_t j = 0; j < elementsNum; j++)
-		{
-			tempA.push_back(*aBeginIter);
-			aBeginIter = std::next(aBeginIter);
-		}
-	}
-	groupSize--;
-
-	auto bBeginIter = b.begin();
-	while (bBeginIter != b.end())
-	{
-		Container<T> tempPairB;
-		// std::cout << "BPair { ";
-		for (size_t i = 0; i < elementsNum; i++, bBeginIter = std::next(bBeginIter))
-		{
-			// std::cout << *bBeginIter << " ";
-			tempPairB.push_back(*bBeginIter);
-		}
-		// std::cout << "}" << std::endl;
-
-		// std::cout << "[A]: ";
-		// for (auto aBeginIter = a.begin(); aBeginIter != a.end(); aBeginIter = std::next(aBeginIter))
-		// 	std::cout << *aBeginIter << " ";
-		// std::cout << std::endl;
-
-		// std::cout << "[Temp A] before: ";
-		// for (auto aBeginIter = tempA.begin(); aBeginIter != tempA.end(); aBeginIter = std::next(aBeginIter))
-		// 	std::cout << *aBeginIter << " ";
-		// std::cout << std::endl;
-
-
-		auto LowerBound = lower_bound(tempA, tempPairB.back(), elementsNum, groupSize == 1);
-		int indexToInsert = std::distance(tempA.begin(), LowerBound);
-		// std::cout << "Lower bound index is " << indexToInsert << std::endl;
-		tempA.insert(std::next(tempA.begin(), indexToInsert), tempPairB.begin(), tempPairB.end());
-
-		// std::cout << "[Temp A] after: ";
-		// for (auto aBeginIter = tempA.begin(); aBeginIter != tempA.end(); aBeginIter = std::next(aBeginIter))
-		// {
-		// 	std::cout << *aBeginIter << " ";
-		// }
-		// std::cout << std::endl;
-
-		if (groupSize != 0)
-			groupSize--;
-		if (groupSize == 0)
+		if (jacobianStepSize == 0)
 		{
 			currentJacNumb++;
-			nextJacNumb = currentJacNumb + 1;
-
-			// std::cout << "currentJacNumb " << *currentJacNumb << std::endl;
-			// std::cout << "nextJacNumb " << *nextJacNumb << std::endl;
-	
-			// std::cout << "groupSize ==> " << groupSize << std::endl;
-
-			groupSize = *nextJacNumb - *currentJacNumb;
-			if (groupSize > a.size() * elementsNum)
-				groupSize = a.size() / elementsNum;
-
-			for (size_t i = 0; i < groupSize && aBeginIter != a.end(); i++)
-			{
-				for (size_t j = 0; j < elementsNum; j++)
-				{
-					tempA.push_back(*aBeginIter);
-					aBeginIter = std::next(aBeginIter);
-				}
-			}
+			groupLVL++;
+			jacobianStepSize = *std::next(currentJacNumb) - *currentJacNumb;
+			amountOfComparisons = std::min(static_cast<size_t>(TWO_IN_POWER_OF(groupLVL) - 1), a.size() / elementsNum);
 		}
-	}
 
-	for (size_t i = 0; i < groupSize && aBeginIter != a.end(); groupSize--)
-	{
-		for (size_t j = 0; j < elementsNum; j++)
-		{
-			tempA.push_back(*aBeginIter);
-			aBeginIter = std::next(aBeginIter);
-		}
+		auto LowerBound = lower_bound(a, *std::next(b.begin(), elementsNum - 1), elementsNum, amountOfComparisons);
+		int indexToInsert = std::distance(a.begin(), LowerBound);
+
+		a.insert(std::next(a.begin(), indexToInsert), b.begin(), std::next(b.begin(), elementsNum));
+		b.erase(b.begin(), std::next(b.begin(), elementsNum));
+
+		// std::cout << "[amountOfComparisons]: " << amountOfComparisons << std::endl;
+		// std::cout << "Comparisons: " << comparisons << std::endl;
 	}
-	// std::cout << "[temp a]: " << tempA << std::endl;
-	a = tempA;
+	// std::cout << "END" << std::endl;
+	// std::cout << "[A]: " << a << std::endl;
+	// std::cout << "[B]: " << b << std::endl;
 }
 
 template <template <typename...> class Container, typename T>
@@ -289,21 +162,13 @@ void PmergeMe::merge(Container<T> &pairs, uint recursionLevel)
 			listIntIter pairsCopyBegin = currentPairBegin;
 			listIntIter pairsCopynextPairBegin = std::next(pairsCopyBegin, step);
 
-			// std::swap_ranges(pairsCopyBegin, std::next(pairsCopyBegin, step), pairsCopynextPairBegin);
-			for (int i = 0; i < step; i++)
-			{
-				std::swap(*pairsCopyBegin, *pairsCopynextPairBegin);
-				pairsCopyBegin = std::next(pairsCopyBegin);
-				pairsCopynextPairBegin = std::next(pairsCopynextPairBegin);
-			}
+			std::swap_ranges(pairsCopyBegin, std::next(pairsCopyBegin, step), pairsCopynextPairBegin);
 		}
 		comparisons++;
 		// std::cout << pairs << "[" << recursionLevel << "]" << "curr index = " << currIndex << std::endl;
 		currIndex += step * 2;
 		currentPairBegin = std::next(nextPairEnd);
 	}
-
-
 
 	// std::cout << pairs << "[" << recursionLevel << "]" << std::endl;
 	merge(pairs, recursionLevel + 1);
@@ -433,8 +298,12 @@ void PmergeMe::mergeIsertion(std::list<int> &ints)
 	// std::cout << "[b]: " << b << std::endl;
 	// // std::cout << "[leftovers]: " << leftovers << std::endl;
 
-	changeOrder(b, 0);
-	// std::cout << "[b changed]: " << b << std::endl;
+	std::cout << "[pairs]: " << ints << std::endl;
+	std::cout << "[a]: " << a << std::endl;
+	std::cout << "[b]: " << b << std::endl;
+	changeOrder(b, 1);
+	std::cout << "[b changed]: " << b << std::endl;
+
 	insertion(a, b, 1);
 	ints = a;
 	// std::cout << "[RESULT] [" << 0 << "]" << ints;

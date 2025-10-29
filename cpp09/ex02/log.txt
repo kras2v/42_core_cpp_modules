@@ -1,0 +1,100 @@
+PmergeMe: Parametrized constructor called
+Before: 2 9 7 4 1 5 0 3 6 8 10 [...]
+COMPARISSON
+COMPARISSON
+COMPARISSON
+COMPARISSON
+COMPARISSON
+COMPARISSON
+COMPARISSON
+COMPARISSON
+losers: 
+END: 
+[A]: 0 3 1 5 4 7 2 9 [...]
+[B]: 
+[groupSize]: 0
+[maxGroupSize]: 3
+losers: 4 7 6 8 
+[A]: 0 3 1 5 2 9 [...]
+[B]: 6 8 4 7 
+[groupToMoveFromB_Size]: 2
+[maxGroupSize]: 3
+LEFT => 0
+RIGHT ELEM => 6
+RIGHT ID => 3
+COMPARISSON
+COMPARISSON
+[A]: 0 3 1 5 6 8 2 9 [...]
+[B]: 4 7 
+[groupToMoveFromB_Size]: 1
+[maxGroupSize]: 3
+LEFT => 0
+RIGHT ELEM => 2
+RIGHT ID => 3
+COMPARISSON
+COMPARISSON
+END: 
+[A]: 0 3 1 5 4 7 6 8 2 9 [...]
+[B]: 
+[groupSize]: 0
+[maxGroupSize]: 7
+losers: 1 4 6 2 10 
+[A]: 0 3 5 7 8 9 [...]
+[B]: 4 1 2 6 10 
+[groupToMoveFromB_Size]: 2
+[maxGroupSize]: 3
+LEFT => 0
+RIGHT ELEM => 7
+RIGHT ID => 3
+COMPARISSON
+COMPARISSON
+[A]: 0 3 4 5 7 8 9 [...]
+[B]: 1 2 6 10 
+[groupToMoveFromB_Size]: 1
+[maxGroupSize]: 3
+LEFT => 0
+RIGHT ELEM => 5
+RIGHT ID => 3
+COMPARISSON
+COMPARISSON
+[A]: 0 1 3 4 5 7 8 9 [...]
+[B]: 2 6 10 
+[groupToMoveFromB_Size]: 2
+[maxGroupSize]: 7
+LEFT => 0
+RIGHT ELEM => 9
+RIGHT ID => 7
+COMPARISSON
+COMPARISSON
+COMPARISSON
+[A]: 0 1 2 3 4 5 7 8 9 [...]
+[B]: 6 10 
+[groupToMoveFromB_Size]: 1
+[maxGroupSize]: 7
+LEFT => 0
+RIGHT ELEM => 8
+RIGHT ID => 7
+COMPARISSON
+COMPARISSON
+COMPARISSON
+[A]: 0 1 2 3 4 5 6 7 8 9 [...]
+[B]: 10 
+[groupToMoveFromB_Size]: 1
+[maxGroupSize]: 11
+LEFT => 0
+RIGHT ELEM => 10
+RIGHT ID => 10
+COMPARISSON
+COMPARISSON
+COMPARISSON
+END: 
+[A]: 0 1 2 3 4 5 6 7 8 9 10 [...]
+[B]: 
+[groupSize]: 0
+[maxGroupSize]: 11
+comparisons: 25
+After: 0 1 2 3 4 5 6 7 8 9 10 [...]
+Time to process a range of 11 elements with std::list<int> : 136 us
+11 is vector sorted: false
+11 is list sorted: true
+PmergeMe: destructor called
