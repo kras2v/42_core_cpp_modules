@@ -40,6 +40,15 @@ class PmergeMe
 		using listIntIter = std::list<int>::iterator;
 		static listIntIter lower_bound(std::list<int> &ints, int numb, size_t elementsNum, size_t totalGroupSize);
 
+		template <template <typename...> class Container, typename T>
+		static void compareGroupsInPair(Container<T> &pairs, size_t numberOfElementsInGroup);
+
+		template <template <typename...> class Container, typename T>
+		static void splitIntoLargerAndSmaller(Container<T> &pairs, Container<T> &larger, Container<T> &smaller, Container<T> &leftovers, size_t elementsPerPair, size_t numPairs, size_t numberOfElementsInGroup);
+
+		template <template <typename...> class Container, typename T>
+		static void insertSmallestElementInLargest(Container<T> &larger, Container<T> &smaller, size_t elementsPerPair);
+
 	public:
 		PmergeMe(size_t size);
 		~PmergeMe();

@@ -128,74 +128,48 @@ void PmergeMe::insertion(Container<T> &a, Container<T> &b, size_t elementsNum)
 }
 
 template <template <typename...> class Container, typename T>
-void PmergeMe::merge(Container<T> &pairs, uint recursionLevel)
+void PmergeMe::compareGroupsInPair(Container<T> &pairs, size_t numberOfElementsInGroup)
 {
-	int step = std::pow(2, recursionLevel);
+	size_t currIndex = numberOfElementsInGroup - 1;
+	size_t maxIndex = pairs.size();
 
-	// std::cout << "Pairs size = " << pairs.size() << " recursionLevel= " << recursionLevel << std::endl;
-	if (static_cast<int>(pairs.size()) < step * 2) return;
-
-	int currIndex = step - 1;
-	int maxIndex = pairs.size();
-
-	int numPairs = (maxIndex / step) / 2;
-	int elementsPerPair = step * 2;
-	int leftoverElements = maxIndex - (numPairs * elementsPerPair);
-	int elemInPairInLastIteration = step;
-
-	// std::cout << pairs << "[" << recursionLevel << "]" << std::endl
-	// 		<< " number of pairs: " << numPairs << std::endl
-	// 		<< " number of elements per pair: " << elementsPerPair << std::endl
-	// 		<< " number of elements without pair: " << leftoverElements << std::endl
-	// 		<< " number of elements in pair in last iteration: " << elemInPairInLastIteration << std::endl
-	// 		<< std::endl;
-
-	listIntIter pairsEnd = pairs.end();
-	for (listIntIter currentPairBegin = pairs.begin(); currentPairBegin != pairsEnd;)
+	for (listIntIter currentPairBegin = pairs.begin();
+		currentPairBegin != pairs.end();
+		currIndex += numberOfElementsInGroup * 2, comparisons++)
 	{
-		if (currIndex + step >= maxIndex) break;
+		if (currIndex + numberOfElementsInGroup >= maxIndex) break;
 		listIntIter currentPairEnd = std::next(pairs.begin(), currIndex);
-		listIntIter nextPairEnd = std::next(currentPairEnd, step);
+		listIntIter nextPairEnd = std::next(currentPairEnd, numberOfElementsInGroup);
 
 		if (*currentPairEnd > *nextPairEnd)
 		{
-			listIntIter pairsCopyBegin = currentPairBegin;
-			listIntIter pairsCopynextPairBegin = std::next(pairsCopyBegin, step);
-
-			std::swap_ranges(pairsCopyBegin, std::next(pairsCopyBegin, step), pairsCopynextPairBegin);
+			listIntIter pairsCopynextPairBegin = std::next(currentPairBegin, numberOfElementsInGroup);
+			std::swap_ranges(currentPairBegin, std::next(currentPairBegin, numberOfElementsInGroup), pairsCopynextPairBegin);
 		}
-		comparisons++;
-		// std::cout << pairs << "[" << recursionLevel << "]" << "curr index = " << currIndex << std::endl;
-		currIndex += step * 2;
 		currentPairBegin = std::next(nextPairEnd);
 	}
+}
 
-	// std::cout << pairs << "[" << recursionLevel << "]" << std::endl;
-	merge(pairs, recursionLevel + 1);
-	Container<T> a;
-	Container<T> b;
+template <template <typename...> class Container, typename T>
+void PmergeMe::splitIntoLargerAndSmaller(Container<T> &pairs, Container<T> &larger, Container<T> &smaller, Container<T> &leftovers, size_t elementsPerPair, size_t numPairs, size_t numberOfElementsInGroup)
+{
+	size_t leftoversElements = pairs.size() - (numPairs * elementsPerPair);
+	size_t elemInPairInLastIteration = numberOfElementsInGroup;
 
-	// if (numPairs == 1) return;
+	if (leftoversElements >= elemInPairInLastIteration)
+		numPairs += leftoversElements / elemInPairInLastIteration;
 
-	if (leftoverElements >= elemInPairInLastIteration)
-	{
-		numPairs += leftoverElements / elemInPairInLastIteration;
-	}
-
-	// std::cout << "Num pairs: " << numPairs << std::endl;
-
-	pairsEnd = pairs.end();
-	listIntIter currentPairBegin = pairs.begin();
+	listIntIter currentPairBegin;
 	for (currentPairBegin = pairs.begin();
-		currentPairBegin != pairsEnd &&
-		static_cast<int>(std::distance(currentPairBegin, pairsEnd)) >= elementsPerPair;
+		currentPairBegin != pairs.end() &&
+		static_cast<size_t>(std::distance(currentPairBegin, pairs.end())) >= elementsPerPair;
 	)
 	{
 		auto it = currentPairBegin;
-		b.insert(b.end(), it, std::next(it, elementsPerPair / 2));
+		smaller.insert(smaller.end(), it, std::next(it, elementsPerPair / 2));
 		it = std::next(it, elementsPerPair / 2);
 
-		a.insert(a.end(), it, std::next(it, elementsPerPair / 2));
+		larger.insert(larger.end(), it, std::next(it, elementsPerPair / 2));
 		it = std::next(it, elementsPerPair / 2);
 
 		currentPairBegin = it;
@@ -204,155 +178,57 @@ void PmergeMe::merge(Container<T> &pairs, uint recursionLevel)
 			numPairs--;
 	}
 
-	// std::cout << "ORIGIGNAL A B: " << std::endl;
-	// std::cout << "[a]: " << a << std::endl;
-	// std::cout << "[b]: " << b << std::endl;
-
-	while (numPairs)
+	for (; numPairs > 0; numPairs--)
 	{
-		auto it = currentPairBegin;
-		for (int i = 0; i < elementsPerPair / 2; ++i)
-		{
-			b.push_back(*it);
-			++it;
-		}
-		currentPairBegin = it;
-
-		if (numPairs > 0)
-			numPairs--;
+		smaller.insert(smaller.end(), currentPairBegin, std::next(currentPairBegin, elementsPerPair / 2));
+		currentPairBegin = std::next(currentPairBegin, elementsPerPair / 2);
 	}
 
-	Container<T> leftovers;
 	for (; currentPairBegin != pairs.end(); currentPairBegin = std::next(currentPairBegin))
 	{
 		leftovers.push_back(*currentPairBegin);
 	}
+}
 
-	a.insert(a.begin(), b.begin(), std::next(b.begin(), elementsPerPair / 2));
-	b.erase(b.begin(), std::next(b.begin(), elementsPerPair / 2));
+template <template <typename...> class Container, typename T>
+void PmergeMe::insertSmallestElementInLargest(Container<T> &larger, Container<T> &smaller, size_t elementsPerPair)
+{
+	larger.insert(larger.begin(), smaller.begin(), std::next(smaller.begin(), elementsPerPair / 2));
+	smaller.erase(smaller.begin(), std::next(smaller.begin(), elementsPerPair / 2));
+}
 
-	// std::cout << "[pairs]: " << pairs << std::endl;
-	// std::cout << "[numOfElem]: " << elementsPerPair / 2 << std::endl;
-	// std::cout << "[a]: " << a << std::endl;
-	// std::cout << "[b]: " << b << std::endl;
-	// std::cout << "[leftovers]: " << leftovers << std::endl;
+template <template <typename...> class Container, typename T>
+void PmergeMe::merge(Container<T> &pairs, uint recursionLevel)
+{
+	size_t numberOfElementsInGroup = TWO_IN_POWER_OF(recursionLevel);
 
-	changeOrder(b, step);
-	// std::cout << "[b changed]: " << b << std::endl;
-	insertion(a, b, elementsPerPair / 2);
-	a.insert(a.end(), leftovers.begin(), leftovers.end());
-	pairs = a;
+	if (static_cast<size_t>(pairs.size()) < numberOfElementsInGroup * 2) return;
 
-	// std::cout << "[RESULT] [" << recursionLevel << "]" << pairs;
+	size_t numPairs = (pairs.size() / numberOfElementsInGroup) / 2;
+	size_t elementsPerPair = numberOfElementsInGroup * 2;
+
+	compareGroupsInPair(pairs, numberOfElementsInGroup);
+	if (numPairs > 1) merge(pairs, recursionLevel + 1);
+
+	Container<T> larger;
+	Container<T> smaller;
+	Container<T> leftovers;
+	splitIntoLargerAndSmaller(pairs, larger, smaller, leftovers, elementsPerPair, numPairs, numberOfElementsInGroup);
+	insertSmallestElementInLargest(larger, smaller, elementsPerPair);
+	changeOrder(smaller, numberOfElementsInGroup);
+	insertion(larger, smaller, elementsPerPair / 2);
+
+	larger.insert(larger.end(), leftovers.begin(), leftovers.end());
+	pairs = larger;
 }
 
 void PmergeMe::mergeIsertion(std::list<int> &ints)
 {
-	listIntIter intsEnd = ints.end();
-	for (listIntIter intsBegin = ints.begin(); intsBegin != intsEnd;)
-	{
-		listIntIter nextIt = std::next(intsBegin);
-		if (nextIt == intsEnd) break;
-
-		//Biggest number goes on second position, so we have pair = {min, max}
-		if (*intsBegin > *nextIt)
-		{
-			std::swap(*intsBegin, *nextIt);
-		}
-		comparisons++;
-		intsBegin = std::next(nextIt);
-	}
-
-	merge(ints, 1);
-
-	std::list<int> a;
-	std::list<int> b;
-
-	listIntIter currentPairBegin = ints.begin();
-	for (currentPairBegin = ints.begin();
-		currentPairBegin != intsEnd;
-	)
-	{
-		auto it = currentPairBegin;
-		b.insert(b.end(), it, std::next(it, 1));
-
-		if (std::next(it) == intsEnd) break;
-
-		it = std::next(it, 1);
-
-		a.insert(a.end(), it, std::next(it, 1));
-		it = std::next(it,1);
-
-		currentPairBegin = it;
-	}
-
-	// std::cout << "ORIGIGNAL A B: " << std::endl;
-	// std::cout << "[a]: " << a << std::endl;
-	// std::cout << "[b]: " << b << std::endl;
-
-	a.insert(a.begin(), b.begin(), std::next(b.begin(), 1));
-	b.erase(b.begin(), std::next(b.begin(), 1));
-
-	// std::cout << "[pairs]: " << ints << std::endl;
-	// std::cout << "[a]: " << a << std::endl;
-	// std::cout << "[b]: " << b << std::endl;
-	// // std::cout << "[leftovers]: " << leftovers << std::endl;
-
-	std::cout << "[pairs]: " << ints << std::endl;
-	std::cout << "[a]: " << a << std::endl;
-	std::cout << "[b]: " << b << std::endl;
-	changeOrder(b, 1);
-	std::cout << "[b changed]: " << b << std::endl;
-
-	insertion(a, b, 1);
-	ints = a;
-	// std::cout << "[RESULT] [" << 0 << "]" << ints;
-	std::cout << "comparisons: " << comparisons << std::endl;
+	merge(ints, 0);
+	#ifdef DEBUG
+		std::cout << "comparisons: " << comparisons << std::endl;
+	#endif
 }
-
-using listIntIter = std::list<int>::iterator;
-
-// void PmergeMe::mergeIsertion(std::list<int> &ints)
-// {
-// 	if (ints.size() == 1) return;
-
-// 	std::list<int> winners;
-// 	std::list<int> losers;
-
-// 	listIntIter intsEnd = ints.end();
-// 	for (listIntIter intsBegin = ints.begin(); intsBegin != intsEnd;)
-// 	{
-// 		if (std::next(intsBegin) != intsEnd)
-// 		{
-// 			losers.push_back(std::min(*intsBegin, *std::next(intsBegin)));
-// 			winners.push_back(std::max(*intsBegin, *std::next(intsBegin)));
-// 			intsBegin++;
-// 			intsBegin++;
-// 		}
-// 		else
-// 		{
-// 			losers.push_back(*intsBegin);
-// 			intsBegin++;
-// 		}
-// 	}
-
-// 	mergeIsertion(winners);
-// 	ints.assign(winners.begin(), winners.end());
-
-// 	if (losers.size() == 1)
-// 	{
-// 		ints.insert(ints.begin(), losers.front());
-// 		return ;
-// 	}
-
-// 	changeOrder(losers);
-// 	for (listIntIter losersIter = losers.begin(); losersIter != losers.end(); )
-// 	{
-// 		ints.insert(lower_bound(ints, *losersIter), *losersIter);
-// 		losersIter++;
-// 	}
-// }
-
 
 std::ostream & operator<<(std::ostream &ofs, std::vector<int> &ints)
 {
