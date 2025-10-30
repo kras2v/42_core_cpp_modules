@@ -21,14 +21,14 @@ int main(int argc, char *argv[])
 
 	PmergeMe sorter(argc - 1);
 
-	std::cout << "Before: " << list_ints << std::endl;
+	std::cout << "Before: " << vector_ints << std::endl;
 
-	// u_time_duration durationVector = Timer::track_time(&PmergeMe::mergeIsertion, vector_ints);
+	u_time_duration durationVector = Timer::track_time(&PmergeMe::mergeIsertion, vector_ints);
 	u_time_duration durationList = Timer::track_time(&PmergeMe::mergeIsertion, list_ints);
 
-	std::cout << "After: " << list_ints << std::endl;
+	std::cout << "After: " << vector_ints << std::endl;
 
-	// Timer::showTimeReport(vector_ints.size(), "std::vector<int>", durationVector);
+	Timer::showTimeReport(vector_ints.size(), "std::vector<int>", durationVector);
 	Timer::showTimeReport(list_ints.size(), "std::list<int>", durationList);
 
 	#ifdef DEBUG
