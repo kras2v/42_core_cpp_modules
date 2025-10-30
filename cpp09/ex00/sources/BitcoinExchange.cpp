@@ -139,7 +139,45 @@ time_t BitcoinExchange::parseDate(std::string line, std::string errmsg)
 		throw FileException(errmsg);
 	}
 
-	return mktime(&tm);
+	int day = tm.tm_mday;
+	int month = tm.tm_mon + 1;
+	int year = tm.tm_year + 1900;
+
+	int amountOfDays = 0;
+	switch (month)
+	{
+		case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+			amountOfDays = 31;
+			break;
+
+		case 4: case 6: case 9: case 11:
+			amountOfDays = 30;
+			break;
+
+		case 2:
+		{
+			bool isLeap = year % 4 == 0 && year % 100 != 0 && year % 400 != 0;
+			amountOfDays = isLeap ? 29 : 28;
+			break;
+		}
+
+		default:
+			throw FileException(errmsg);
+			break;
+	}
+
+	if (day < 1 || day > amountOfDays)
+		throw FileException(errmsg);
+
+	time_t parsedTime = mktime(&tm);
+	if (parsedTime == -1)
+		throw FileException(errmsg);
+
+	time_t now = time(nullptr);
+	if (difftime(parsedTime, now) > 0)
+		throw FileException("Error: bad input (date cannot be in the future) => " + line);
+
+	return parsedTime;
 }
 
 float BitcoinExchange::parseValue(std::string line, std::string errmsg)

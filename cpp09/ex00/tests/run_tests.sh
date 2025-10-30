@@ -61,14 +61,14 @@ run_test() {
 }
 
 # Build the program
-echo -e "${BLUE}Building Bitcoin Exchange...${NC}"
-make re
-if [ $? -ne 0 ]; then
-    echo -e "${RED}❌ Build failed! Cannot run tests.${NC}"
-    exit 1
-fi
-echo -e "${GREEN}✅ Build successful${NC}"
-echo
+				# echo -e "${BLUE}Building Bitcoin Exchange...${NC}"
+				# make re
+				# if [ $? -ne 0 ]; then
+				# 	echo -e "${RED}❌ Build failed! Cannot run tests.${NC}"
+				# 	exit 1
+				# fi
+				# echo -e "${GREEN}✅ Build successful${NC}"
+				# echo
 
 # Test 1: Valid input file with correct format
 run_test "Valid Bitcoin calculations" "test_valid.txt" "success"
@@ -96,6 +96,7 @@ run_test "Edge cases with boundary dates" "test_edge_cases.txt" "success"
 
 # Test 9: Non-existent file
 run_test "Non-existent file" "nonexistent.txt" "error"
+
 
 # Test 10: No arguments
 echo -e "${YELLOW}Test $((TOTAL_TESTS + 1)): No arguments${NC}"
