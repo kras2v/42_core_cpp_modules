@@ -11,6 +11,7 @@ u_time_duration Timer::track_time( void(*func)(Container<T>&), Container<T>& con
 	u_time_point end = std::chrono::high_resolution_clock::now();
 
 	u_time_duration duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+	
 	return duration;
 }
 

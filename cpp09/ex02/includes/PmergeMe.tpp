@@ -112,11 +112,9 @@ void PmergeMe::insertion(std::list<int> &a, std::list<int> &b, size_t elementsNu
 		}
 
 		auto LowerBound = lower_bound(a, *std::next(b.begin(), elementsNum - 1), elementsNum, amountOfComparisons);
-		int indexintoInsert = std::distance(a.begin(), LowerBound);
 
-		a.insert(std::next(a.begin(), indexintoInsert), b.begin(), std::next(b.begin(), elementsNum));
+		a.insert(LowerBound, b.begin(), std::next(b.begin(), elementsNum));
 		b.erase(b.begin(), std::next(b.begin(), elementsNum));
-
 	}
 }
 
